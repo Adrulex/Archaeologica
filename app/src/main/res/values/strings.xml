@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Archaeologica</string>
+    <string name="splashscreen">Splashscreen Logo</string>
 </resources>
