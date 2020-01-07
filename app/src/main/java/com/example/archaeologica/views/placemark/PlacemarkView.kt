@@ -1,5 +1,6 @@
 package com.example.archaeologica.views.placemark
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -36,16 +37,17 @@ class PlacemarkView : BaseView(), AnkoLogger {
   override fun showPlacemark(placemark: PlacemarkModel) {
     placemarkTitle.setText(placemark.title)
     description.setText(placemark.description)
-    placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
-    if (placemark.image != null) {
+    placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image1))
+    if (placemark.image1 != "") {
       chooseImage.setText(R.string.change_placemark_image)
     }
     this.showLocation(placemark.lat, placemark.lng)
   }
 
+  @SuppressLint("SetTextI18n")
   override fun showLocation(latitude : Double, longitude : Double) {
-    lat.setText("%.6f".format(latitude))
-    lng.setText("%.6f".format(longitude))
+    lat.setText("%.3f".format(latitude))
+    lng.setText("%.3f".format(longitude))
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -66,6 +68,7 @@ class PlacemarkView : BaseView(), AnkoLogger {
         }
       }
     }
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     return super.onOptionsItemSelected(item)
   }
 

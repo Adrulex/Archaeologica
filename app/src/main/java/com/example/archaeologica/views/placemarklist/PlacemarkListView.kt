@@ -39,6 +39,7 @@ class PlacemarkListView :  BaseView(), PlacemarkListener {
     when (item?.itemId) {
       R.id.item_add -> presenter.doAddPlacemark()
     }
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     return super.onOptionsItemSelected(item)
   }
 

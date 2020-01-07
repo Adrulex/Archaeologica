@@ -44,7 +44,13 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
     if (foundPlacemark != null) {
       foundPlacemark.title = placemark.title
       foundPlacemark.description = placemark.description
-      foundPlacemark.image = placemark.image
+      foundPlacemark.notes = placemark.notes
+      foundPlacemark.visited = placemark.visited
+      foundPlacemark.datevisited = placemark.datevisited
+      foundPlacemark.image1 = placemark.image1
+      foundPlacemark.image2 = placemark.image2
+      foundPlacemark.image3 = placemark.image3
+      foundPlacemark.image4 = placemark.image4
       foundPlacemark.lat = placemark.lat
       foundPlacemark.lng = placemark.lng
       foundPlacemark.zoom = placemark.zoom

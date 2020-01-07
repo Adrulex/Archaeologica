@@ -7,11 +7,11 @@
     tools:context=".views.splashscreen.SplashView">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/SplashImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/splashscreen"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/hillfort" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/SplashText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
@@ -27,12 +27,12 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/white"
-        android:textSize="52sp"
+        android:textSize="54sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.975" />
+        app:layout_constraintTop_toTopOf="@+id/SplashImage"
+        app:layout_constraintVertical_bias="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

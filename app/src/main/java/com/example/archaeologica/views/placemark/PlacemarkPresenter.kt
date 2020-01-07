@@ -127,7 +127,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     when (requestCode) {
       IMAGE_REQUEST -> {
-        placemark.image = data.data.toString()
+        placemark.image1 = data.data.toString()
         view?.showPlacemark(placemark)
       }
       LOCATION_REQUEST -> {

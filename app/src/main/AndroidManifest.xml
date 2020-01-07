@@ -29,8 +29,6 @@
             android:name=".views.placemarklist.PlacemarkListView"
             android:label="@string/title_activity_placemark_list"
             android:launchMode="singleTop">
-
-
         </activity>
 
         <activity
