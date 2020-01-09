@@ -40,20 +40,20 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
 
   override fun update(placemark: PlacemarkModel) {
     val placemarksList = findAll() as ArrayList<PlacemarkModel>
-    var foundPlacemark: PlacemarkModel? = placemarksList.find { p -> p.id == placemark.id }
+    val foundPlacemark: PlacemarkModel? = placemarksList.find { p -> p.id == placemark.id }
     if (foundPlacemark != null) {
       foundPlacemark.title = placemark.title
       foundPlacemark.description = placemark.description
       foundPlacemark.notes = placemark.notes
       foundPlacemark.visited = placemark.visited
       foundPlacemark.datevisited = placemark.datevisited
-      foundPlacemark.image1 = placemark.image1
-      foundPlacemark.image2 = placemark.image2
-      foundPlacemark.image3 = placemark.image3
-      foundPlacemark.image4 = placemark.image4
       foundPlacemark.lat = placemark.lat
       foundPlacemark.lng = placemark.lng
       foundPlacemark.zoom = placemark.zoom
+      if(placemark.image1 != "") foundPlacemark.image1 = placemark.image1
+      if(placemark.image2 != "") foundPlacemark.image2 = placemark.image2
+      if(placemark.image3 != "") foundPlacemark.image3 = placemark.image3
+      if(placemark.image4 != "") foundPlacemark.image4 = placemark.image4
     }
     serialize()
   }

@@ -11,7 +11,7 @@ import org.jetbrains.anko.toast
 import com.example.archaeologica.R
 import com.example.archaeologica.helpers.readImageFromPath
 import com.example.archaeologica.models.PlacemarkModel
-import com.example.archaeologica.views.BaseView
+import com.example.archaeologica.views.*
 
 class PlacemarkView : BaseView(), AnkoLogger {
 
@@ -31,23 +31,27 @@ class PlacemarkView : BaseView(), AnkoLogger {
       it.setOnMapClickListener { presenter.doSetLocation() }
     }
 
-    chooseImage.setOnClickListener { presenter.doSelectImage() }
+    placemarkImage1.setOnClickListener { presenter.doSelectImage(IMAGE1_REQUEST) }
+    placemarkImage2.setOnClickListener { presenter.doSelectImage(IMAGE2_REQUEST) }
+    placemarkImage3.setOnClickListener { presenter.doSelectImage(IMAGE3_REQUEST) }
+    placemarkImage4.setOnClickListener { presenter.doSelectImage(IMAGE4_REQUEST) }
+    checkvisited.setOnClickListener {presenter.doUpdateVisited() }
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {
     placemarkTitle.setText(placemark.title)
     description.setText(placemark.description)
-    placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image1))
-    if (placemark.image1 != "") {
-      chooseImage.setText(R.string.change_placemark_image)
-    }
+    if(placemark.image1 != "") placemarkImage1.setImageBitmap(readImageFromPath(this, placemark.image1))
+    if(placemark.image2 != "") placemarkImage2.setImageBitmap(readImageFromPath(this, placemark.image2))
+    if(placemark.image3 != "") placemarkImage3.setImageBitmap(readImageFromPath(this, placemark.image3))
+    if(placemark.image4 != "") placemarkImage4.setImageBitmap(readImageFromPath(this, placemark.image4))
     this.showLocation(placemark.lat, placemark.lng)
   }
 
   @SuppressLint("SetTextI18n")
   override fun showLocation(latitude : Double, longitude : Double) {
-    lat.setText("%.3f".format(latitude))
-    lng.setText("%.3f".format(longitude))
+    lat.setText("Lat: %.3f".format(latitude))
+    lng.setText("Lng: %.3f".format(longitude))
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {

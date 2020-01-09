@@ -38,9 +38,10 @@ class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
 
     fun bind(placemark: PlacemarkModel, listener: PlacemarkListener) {
       itemView.placemarkTitle.text = placemark.title
-      itemView.description.text = placemark.description
+      itemView.description.text = "Lat: " + "%.6f".format(placemark.lat) + " \nLng: " + "%.6f".format(placemark.lng)
       itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, placemark.image1))
       itemView.setOnClickListener { listener.onPlacemarkClick(placemark) }
+        itemView.checkBox.isChecked = placemark.visited
     }
   }
 }

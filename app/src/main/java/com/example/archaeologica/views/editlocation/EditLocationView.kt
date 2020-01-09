@@ -1,6 +1,7 @@
 package com.example.archaeologica.views.editlocation
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -46,9 +47,10 @@ class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.O
 
   override fun onMarkerDragStart(marker: Marker) {}
 
+  @SuppressLint("SetTextI18n")
   override fun onMarkerDrag(marker: Marker) {
-    lat.setText("%.6f".format(marker.position.latitude))
-    lng.setText("%.6f".format(marker.position.longitude))
+    lat.text = "%.3f".format(marker.position.latitude)
+    lng.text = "%.3f".format(marker.position.longitude)
   }
 
   override fun onMarkerDragEnd(marker: Marker) {

@@ -12,14 +12,17 @@ import com.example.archaeologica.views.editlocation.EditLocationView
 import com.example.archaeologica.views.placemark.PlacemarkView
 import com.example.archaeologica.views.placemarklist.PlacemarkListView
 
-val IMAGE_REQUEST = 1
-val LOCATION_REQUEST = 2
+val IMAGE1_REQUEST = 1
+val IMAGE2_REQUEST = 2
+val IMAGE3_REQUEST = 3
+val IMAGE4_REQUEST = 4
+val LOCATION_REQUEST = 5
 
 enum class VIEW {
   LOCATION, PLACEMARK, LIST
 }
 
-abstract class BaseView() : AppCompatActivity(), AnkoLogger {
+abstract class BaseView : AppCompatActivity(), AnkoLogger {
 
   var basePresenter: BasePresenter? = null
 

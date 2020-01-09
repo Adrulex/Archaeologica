@@ -50,7 +50,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
 
   @SuppressLint("MissingPermission")
   fun doResartLocationUpdates() {
-    var locationCallback = object : LocationCallback() {
+    val locationCallback = object : LocationCallback() {
       override fun onLocationResult(locationResult: LocationResult?) {
         if (locationResult != null && locationResult.locations != null) {
           val l = locationResult.locations.last()
@@ -89,6 +89,9 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     view?.showLocation(placemark.lat, placemark.lng)
   }
 
+  fun doUpdateVisited(){
+    placemark.visited = placemark.visited.not()
+  }
 
   fun doAddOrSave(title: String, description: String) {
     placemark.title = title
@@ -114,9 +117,14 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     view?.finish()
   }
 
-  fun doSelectImage() {
+  fun doSelectImage(Select : Int) {
     view?.let {
-      showImagePicker(view!!, IMAGE_REQUEST)
+      when (Select) {
+        1 -> showImagePicker(view!!, IMAGE1_REQUEST)
+        2 -> showImagePicker(view!!, IMAGE2_REQUEST)
+        3 -> showImagePicker(view!!, IMAGE3_REQUEST)
+        4 -> showImagePicker(view!!, IMAGE4_REQUEST)
+      }
     }
   }
 
@@ -126,8 +134,20 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
 
   override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     when (requestCode) {
-      IMAGE_REQUEST -> {
+      IMAGE1_REQUEST -> {
         placemark.image1 = data.data.toString()
+        view?.showPlacemark(placemark)
+      }
+      IMAGE2_REQUEST -> {
+        placemark.image2 = data.data.toString()
+        view?.showPlacemark(placemark)
+      }
+      IMAGE3_REQUEST -> {
+        placemark.image3 = data.data.toString()
+        view?.showPlacemark(placemark)
+      }
+      IMAGE4_REQUEST -> {
+        placemark.image4 = data.data.toString()
         view?.showPlacemark(placemark)
       }
       LOCATION_REQUEST -> {
