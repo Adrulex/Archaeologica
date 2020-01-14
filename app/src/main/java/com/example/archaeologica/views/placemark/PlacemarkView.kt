@@ -1,17 +1,20 @@
 package com.example.archaeologica.views.placemark
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_placemark.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.toast
 import com.example.archaeologica.R
 import com.example.archaeologica.helpers.readImageFromPath
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.*
+import kotlinx.android.synthetic.main.activity_placemark.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.toast
+import java.io.File
+
 
 class PlacemarkView : BaseView(), AnkoLogger {
 
@@ -36,6 +39,7 @@ class PlacemarkView : BaseView(), AnkoLogger {
     placemarkImage3.setOnClickListener { presenter.doSelectImage(IMAGE3_REQUEST) }
     placemarkImage4.setOnClickListener { presenter.doSelectImage(IMAGE4_REQUEST) }
     checkvisited.setOnClickListener {presenter.doUpdateVisited() }
+    checkvisited.isChecked = placemark.visited
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {
@@ -50,8 +54,8 @@ class PlacemarkView : BaseView(), AnkoLogger {
 
   @SuppressLint("SetTextI18n")
   override fun showLocation(latitude : Double, longitude : Double) {
-    lat.setText("Lat: %.3f".format(latitude))
-    lng.setText("Lng: %.3f".format(longitude))
+    lat.text = "Lat: %.3f".format(latitude)
+    lng.text = "Lng: %.3f".format(longitude)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -90,6 +94,11 @@ class PlacemarkView : BaseView(), AnkoLogger {
   override fun onDestroy() {
     super.onDestroy()
     mapView.onDestroy()
+    try {
+      trimCache(this)
+    } catch (e: java.lang.Exception) {
+      e.printStackTrace()
+    }
   }
 
   override fun onLowMemory() {
@@ -112,6 +121,28 @@ class PlacemarkView : BaseView(), AnkoLogger {
     super.onSaveInstanceState(outState)
     mapView.onSaveInstanceState(outState)
   }
+
+  fun trimCache(context: Context) {
+    try {
+      val dir: File = context.cacheDir
+      if (dir.isDirectory) {
+        deleteDir(dir)
+      }
+    } catch (e: Exception) {
+    }
+  }
+
+  @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+  fun deleteDir(dir: File?): Boolean {
+    if (dir != null && dir.isDirectory) {
+      val children: Array<String> = dir.list()
+      for (i in children.indices) {
+        val success = deleteDir(File(dir, children[i]))
+        if (!success) {
+          return false
+        }
+      }
+    }
+    return dir!!.delete()
+  }
 }
-
-

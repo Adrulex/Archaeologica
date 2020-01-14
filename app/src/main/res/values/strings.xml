@@ -23,6 +23,6 @@
   <string name="title_activity_edit_location">Edit Location</string>
   <string name="location_dummy">00.000000</string>
   <string name="splashscreen">Splashscreen</string>
-    <string name="Visited">Visited</string>
+    <string name="Visited">visited</string>
     <string name="notVisited">not visited</string>
 </resources>

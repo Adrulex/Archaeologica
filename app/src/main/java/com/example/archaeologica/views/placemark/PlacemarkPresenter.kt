@@ -81,7 +81,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     placemark.lng = lng
     placemark.zoom = 15f
     map?.clear()
-    map?.uiSettings?.setZoomControlsEnabled(true)
+    map?.uiSettings?.isZoomControlsEnabled = false
     val options =
       MarkerOptions().title(placemark.title).position(LatLng(placemark.lat, placemark.lng))
     map?.addMarker(options)
@@ -90,7 +90,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doUpdateVisited(){
-    placemark.visited = placemark.visited.not()
+    placemark.visited = !placemark.visited
   }
 
   fun doAddOrSave(title: String, description: String) {
