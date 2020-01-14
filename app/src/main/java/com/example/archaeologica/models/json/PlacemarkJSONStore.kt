@@ -10,11 +10,11 @@ import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.models.PlacemarkStore
 import java.util.*
 
-val JSON_FILE = "placemarks.json"
-val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val listType = object : TypeToken<ArrayList<PlacemarkModel>>() {}.type
+val PLACEMARK_JSON_FILE = "placemarks.json"
+val placemarkgsonBuilder = GsonBuilder().setPrettyPrinting().create()
+val placemarklistType = object : TypeToken<ArrayList<PlacemarkModel>>() {}.type
 
-fun generateRandomId(): Long {
+fun placemarkgenerateRandomId(): Long {
   return Random().nextLong()
 }
 
@@ -23,7 +23,7 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
   var placemarks = mutableListOf<PlacemarkModel>()
 
   init {
-    if (exists(context, JSON_FILE)) {
+    if (exists(context, PLACEMARK_JSON_FILE)) {
       deserialize()
     }
   }
@@ -33,7 +33,7 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
   }
 
   override fun create(placemark: PlacemarkModel) {
-    placemark.id = generateRandomId()
+    placemark.id = placemarkgenerateRandomId()
     placemarks.add(placemark)
     serialize()
   }
@@ -69,14 +69,14 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
   }
 
   private fun serialize() {
-    val jsonString = gsonBuilder.toJson(placemarks,
-      listType
+    val jsonString = placemarkgsonBuilder.toJson(placemarks,
+      placemarklistType
     )
-    write(context, JSON_FILE, jsonString)
+    write(context, PLACEMARK_JSON_FILE, jsonString)
   }
 
   private fun deserialize() {
-    val jsonString = read(context, JSON_FILE)
-    placemarks = Gson().fromJson(jsonString, listType)
+    val jsonString = read(context, PLACEMARK_JSON_FILE)
+    placemarks = Gson().fromJson(jsonString, placemarklistType)
   }
 }
