@@ -13,6 +13,10 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
     view?.navigateTo(VIEW.PLACEMARK)
   }
 
+  fun doGotoLogin(){
+    view?.finish()
+  }
+
   fun doEditPlacemark(placemark: PlacemarkModel) {
     view?.navigateTo(VIEW.PLACEMARK, 0, "placemark_edit", placemark)
   }

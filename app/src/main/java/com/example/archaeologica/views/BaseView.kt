@@ -6,20 +6,21 @@ import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import org.jetbrains.anko.AnkoLogger
-
 import com.example.archaeologica.models.PlacemarkModel
+
 import com.example.archaeologica.views.editlocation.EditLocationView
+import com.example.archaeologica.views.login.LoginView
 import com.example.archaeologica.views.placemark.PlacemarkView
 import com.example.archaeologica.views.placemarklist.PlacemarkListView
 
-val IMAGE1_REQUEST = 1
-val IMAGE2_REQUEST = 2
-val IMAGE3_REQUEST = 3
-val IMAGE4_REQUEST = 4
-val LOCATION_REQUEST = 5
+const val IMAGE1_REQUEST = 1
+const val IMAGE2_REQUEST = 2
+const val IMAGE3_REQUEST = 3
+const val IMAGE4_REQUEST = 4
+const val LOCATION_REQUEST = 5
 
 enum class VIEW {
-  LOCATION, PLACEMARK, LIST
+  LOCATION, PLACEMARK, LIST, LOGIN
 }
 
 abstract class BaseView : AppCompatActivity(), AnkoLogger {
@@ -32,6 +33,7 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
       VIEW.LOCATION -> intent = Intent(this, EditLocationView::class.java)
       VIEW.PLACEMARK -> intent = Intent(this, PlacemarkView::class.java)
       VIEW.LIST -> intent = Intent(this, PlacemarkListView::class.java)
+      VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
     }
     if (key != "") {
       intent.putExtra(key, value)

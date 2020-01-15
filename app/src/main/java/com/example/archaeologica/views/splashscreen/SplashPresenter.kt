@@ -10,6 +10,6 @@ class SplashPresenter(view: BaseView) : BasePresenter(view) {
 
     fun onStartup(){
         view?.finish()
-        view?.navigateTo(VIEW.LIST)
+        view?.navigateTo(VIEW.LOGIN)
     }
 }

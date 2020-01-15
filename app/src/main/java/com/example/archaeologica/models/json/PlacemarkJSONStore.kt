@@ -11,8 +11,8 @@ import com.example.archaeologica.models.PlacemarkStore
 import java.util.*
 
 val PLACEMARK_JSON_FILE = "placemarks.json"
-val placemarkgsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val placemarklistType = object : TypeToken<ArrayList<PlacemarkModel>>() {}.type
+val placemarkgsonBuilder = GsonBuilder().setPrettyPrinting().create()!!
+val placemarklistType = object : TypeToken<ArrayList<PlacemarkModel>>() {}.type!!
 
 fun placemarkgenerateRandomId(): Long {
   return Random().nextLong()
@@ -64,8 +64,7 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
   }
 
   override fun findById(id:Long) : PlacemarkModel? {
-    val foundPlacemark: PlacemarkModel? = placemarks.find { it.id == id }
-    return foundPlacemark
+    return placemarks.find { it.id == id }
   }
 
   private fun serialize() {

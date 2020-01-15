@@ -11,8 +11,8 @@ import com.example.archaeologica.models.UsersStore
 import java.util.*
 
 val USERS_JSON_FILE = "users.json"
-val usersgsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val userslistType = object : TypeToken<ArrayList<UsersModel>>() {}.type
+val usersgsonBuilder = GsonBuilder().setPrettyPrinting().create()!!
+val userslistType = object : TypeToken<ArrayList<UsersModel>>() {}.type!!
 
 fun usersgenerateRandomId(): Long {
   return Random().nextLong()
@@ -54,8 +54,7 @@ class UsersJSONStore(val context: Context) : UsersStore, AnkoLogger {
   }
 
   override fun findById(id:Long) : UsersModel? {
-    val founduser: UsersModel? = users.find { it.id == id }
-    return founduser
+    return users.find { it.id == id }
   }
 
   private fun serialize() {

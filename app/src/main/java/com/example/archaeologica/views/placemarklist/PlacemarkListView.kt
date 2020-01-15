@@ -1,5 +1,6 @@
 package com.example.archaeologica.views.placemarklist
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -8,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_placemark_list.*
 import com.example.archaeologica.R
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.BaseView
+import org.jetbrains.anko.toast
 
 class PlacemarkListView :  BaseView(), PlacemarkListener {
 
@@ -50,5 +52,20 @@ class PlacemarkListView :  BaseView(), PlacemarkListener {
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     presenter.loadPlacemarks()
     super.onActivityResult(requestCode, resultCode, data)
+  }
+
+  override fun onBackPressed() {
+
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle("Logout?")
+      .setMessage("Do you want to log out?")
+      .setPositiveButton("Yes"){ _, _ ->
+        toast("Logout successful!")
+        presenter.doGotoLogin()
+      }
+      .setNeutralButton("Cancel"){_,_ -> }
+    val dialog: AlertDialog = builder.create()
+    dialog.show()
+
   }
 }

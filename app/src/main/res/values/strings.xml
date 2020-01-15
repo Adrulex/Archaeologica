@@ -25,4 +25,9 @@
   <string name="splashscreen">Splashscreen</string>
     <string name="Visited">Visited</string>
     <string name="notVisited">not visited</string>
+    <string name="title_activity_login">Login</string>
+    <string name="register">Register</string>
+  <string name="login">Login</string>
+    <string name="password">Password</string>
+  <string name="email">Email</string>
 </resources>
