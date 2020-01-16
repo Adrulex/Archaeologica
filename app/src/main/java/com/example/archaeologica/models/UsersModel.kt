@@ -9,5 +9,5 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 data class UsersModel(@PrimaryKey(autoGenerate = true)
                           var id: Long = 0,
-                          var name: String = "",
-                          var email: String = ""): Parcelable
+                          var email: String = "",
+                          var password: String = ""): Parcelable

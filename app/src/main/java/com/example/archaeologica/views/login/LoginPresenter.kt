@@ -7,13 +7,45 @@ import com.example.archaeologica.views.VIEW
 
 class LoginPresenter(view: BaseView) : BasePresenter(view) {
 
-    var users = UsersModel()
+    var user = UsersModel()
 
-    fun doLogin(){
-        view?.navigateTo(VIEW.LIST)
+    fun doLogin(email:String,password:String){
+
+        if (!email.contains('@')) view?.onReaction("invalidEmail")
+        else{
+            if (searchforuser(email)) view?.onReaction("userTaken")
+            else{
+                if (password.length<8) view?.onReaction("passwordWeak")
+                else{
+                    user.email=email
+                    user.password=password
+                    app.users.create(user)
+                    view?.navigateTo(VIEW.LIST, 0, "user", user)
+                }
+            }
+        }
     }
 
-    fun doRegister(){
-        view?.navigateTo(VIEW.LIST)
+    fun doRegister(email:String,password:String){
+
+        if (!email.contains('@')) view?.onReaction("invalidEmail")
+        else{
+            if (searchforuser(email)) view?.onReaction("userTaken")
+            else{
+                if (password.length<8) view?.onReaction("passwordWeak")
+                else{
+                    user.email=email
+                    user.password=password
+                    app.users.create(user)
+                    view?.navigateTo(VIEW.LIST, 0, "user", user)
+                }
+            }
+        }
+    }
+
+    fun searchforuser(email : String) : Boolean {
+        val allUsers = mutableListOf<UsersModel>()
+        allUsers.filter {it.email == email}
+        return allUsers.any()
     }
 }

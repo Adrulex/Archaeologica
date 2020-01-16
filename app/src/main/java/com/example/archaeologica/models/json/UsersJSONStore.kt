@@ -42,7 +42,7 @@ class UsersJSONStore(val context: Context) : UsersStore, AnkoLogger {
     val usersList = findAll() as ArrayList<UsersModel>
     val founduser: UsersModel? = usersList.find { p -> p.id == user.id }
     if (founduser != null) {
-      founduser.name = user.name
+      founduser.password = user.password
       founduser.email = user.email
     }
     serialize()

@@ -12,6 +12,10 @@ import com.example.archaeologica.R
 import com.example.archaeologica.helpers.readImageFromPath
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.*
+import kotlinx.android.synthetic.main.activity_placemark.description
+import kotlinx.android.synthetic.main.activity_placemark.placemarkTitle
+import kotlinx.android.synthetic.main.card_placemark.*
+import java.util.*
 
 class PlacemarkView : BaseView(), AnkoLogger {
 
@@ -31,16 +35,17 @@ class PlacemarkView : BaseView(), AnkoLogger {
       it.setOnMapClickListener { presenter.doSetLocation() }
     }
 
-    placemarkImage1.setOnClickListener { presenter.doSelectImage(IMAGE1_REQUEST) }
-    placemarkImage2.setOnClickListener { presenter.doSelectImage(IMAGE2_REQUEST) }
-    placemarkImage3.setOnClickListener { presenter.doSelectImage(IMAGE3_REQUEST) }
-    placemarkImage4.setOnClickListener { presenter.doSelectImage(IMAGE4_REQUEST) }
+    placemarkImage1.setOnClickListener { presenter.doSelectImage(IMAGE1_REQUEST, placemarkTitle.text.toString(),description.text.toString()) }
+    placemarkImage2.setOnClickListener { presenter.doSelectImage(IMAGE2_REQUEST, placemarkTitle.text.toString(),description.text.toString()) }
+    placemarkImage3.setOnClickListener { presenter.doSelectImage(IMAGE3_REQUEST, placemarkTitle.text.toString(),description.text.toString()) }
+    placemarkImage4.setOnClickListener { presenter.doSelectImage(IMAGE4_REQUEST, placemarkTitle.text.toString(),description.text.toString()) }
     checkvisited.setOnClickListener {presenter.doUpdateVisited() }
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {
     placemarkTitle.setText(placemark.title)
     description.setText(placemark.description)
+    checkvisited.isChecked = placemark.visited
     if(placemark.image1 != "") placemarkImage1.setImageBitmap(readImageFromPath(this, placemark.image1))
     if(placemark.image2 != "") placemarkImage2.setImageBitmap(readImageFromPath(this, placemark.image2))
     if(placemark.image3 != "") placemarkImage3.setImageBitmap(readImageFromPath(this, placemark.image3))
@@ -50,8 +55,8 @@ class PlacemarkView : BaseView(), AnkoLogger {
 
   @SuppressLint("SetTextI18n")
   override fun showLocation(latitude : Double, longitude : Double) {
-    lat.setText("Lat: %.3f".format(latitude))
-    lng.setText("Lng: %.3f".format(longitude))
+    lat.text = "Lat: %.3f".format(latitude)
+    lng.text = "Lng: %.3f".format(longitude)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {

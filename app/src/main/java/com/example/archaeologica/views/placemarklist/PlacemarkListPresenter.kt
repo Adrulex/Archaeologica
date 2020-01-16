@@ -6,6 +6,7 @@ import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.BasePresenter
 import com.example.archaeologica.views.BaseView
 import com.example.archaeologica.views.VIEW
+import com.example.archaeologica.models.UsersModel
 
 class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
 
@@ -23,7 +24,7 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun loadPlacemarks() {
     doAsync {
-      val placemarks = app.placemarks.findAll()
+      val placemarks = app.placemarks.findAll(view?.intent?.extras?.getParcelable<UsersModel>("user")!!)
       uiThread {
         view?.showPlacemarks(placemarks)
       }

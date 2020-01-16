@@ -42,6 +42,7 @@ class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
       itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, placemark.image1))
       itemView.setOnClickListener { listener.onPlacemarkClick(placemark) }
         itemView.checkBox.isChecked = placemark.visited
+        itemView.datevisited.text = placemark.datevisited
     }
   }
 }

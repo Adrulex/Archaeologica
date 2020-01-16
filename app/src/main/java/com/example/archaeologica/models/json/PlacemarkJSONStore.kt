@@ -8,6 +8,7 @@ import org.jetbrains.anko.AnkoLogger
 import com.example.archaeologica.helpers.*
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.models.PlacemarkStore
+import com.example.archaeologica.models.UsersModel
 import java.util.*
 
 val PLACEMARK_JSON_FILE = "placemarks.json"
@@ -21,6 +22,7 @@ fun placemarkgenerateRandomId(): Long {
 class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
 
   var placemarks = mutableListOf<PlacemarkModel>()
+  var currentUser = UsersModel()
 
   init {
     if (exists(context, PLACEMARK_JSON_FILE)) {
@@ -28,8 +30,11 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
     }
   }
 
-  override fun findAll(): MutableList<PlacemarkModel> {
-    return placemarks
+  override fun findAll(user : UsersModel): MutableList<PlacemarkModel> {
+    currentUser = user
+    val filtered = mutableListOf<PlacemarkModel>()
+    filtered.filter {it.userid == user.id}
+    return filtered
   }
 
   override fun create(placemark: PlacemarkModel) {
@@ -39,7 +44,7 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
   }
 
   override fun update(placemark: PlacemarkModel) {
-    val placemarksList = findAll() as ArrayList<PlacemarkModel>
+    val placemarksList = findAll(currentUser) as ArrayList<PlacemarkModel>
     val foundPlacemark: PlacemarkModel? = placemarksList.find { p -> p.id == placemark.id }
     if (foundPlacemark != null) {
       foundPlacemark.title = placemark.title

@@ -12,6 +12,7 @@ import com.example.archaeologica.views.editlocation.EditLocationView
 import com.example.archaeologica.views.login.LoginView
 import com.example.archaeologica.views.placemark.PlacemarkView
 import com.example.archaeologica.views.placemarklist.PlacemarkListView
+import java.util.*
 
 const val IMAGE1_REQUEST = 1
 const val IMAGE2_REQUEST = 2
@@ -72,6 +73,7 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
   open fun showPlacemark(placemark: PlacemarkModel) {}
   open fun showPlacemarks(placemarks: List<PlacemarkModel>) {}
   open fun showLocation(latitude : Double, longitude : Double) {}
+  open fun onReaction(Reaction : String) {}
   open fun showProgress() {}
   open fun hideProgress() {}
 }

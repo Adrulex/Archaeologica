@@ -9,11 +9,12 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 data class PlacemarkModel(@PrimaryKey(autoGenerate = true)
                           var id: Long = 0,
+                          var userid: Long = 0,
                           var title: String = "",
                           var description: String = "",
                           var notes: String = "",
                           var visited: Boolean = false,
-                          var datevisited: String = "",
+                          var datevisited: String = "not visited",
                           var image1: String = "",
                           var image2: String = "",
                           var image3: String = "",

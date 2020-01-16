@@ -58,7 +58,7 @@ class PlacemarkListView :  BaseView(), PlacemarkListener {
 
     val builder = AlertDialog.Builder(this)
     builder.setTitle("Logout?")
-      .setMessage("Do you want to log out?")
+      .setMessage("Are you sure you want to log out?")
       .setPositiveButton("Yes"){ _, _ ->
         toast("Logout successful!")
         presenter.doGotoLogin()

@@ -1,6 +1,5 @@
 package com.example.archaeologica.views.login
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import com.example.archaeologica.R
@@ -22,8 +21,8 @@ class LoginView : BaseView(), AnkoLogger {
 
         presenter = initPresenter (LoginPresenter(this)) as LoginPresenter
 
-        Login.setOnClickListener { presenter.doLogin() }
-        Register.setOnClickListener { presenter.doRegister() }
+        Login.setOnClickListener { presenter.doLogin(email.text.toString(),password.text.toString()) }
+        Register.setOnClickListener { presenter.doRegister(email.text.toString(),password.text.toString()) }
     }
 
     override fun onBackPressed() {
@@ -34,5 +33,18 @@ class LoginView : BaseView(), AnkoLogger {
         this.doubleBackToExitPressedOnce = true
         toast("Please click BACK again to exit")
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    override fun onReaction(Reaction : String){
+        when(Reaction)
+        {
+            "userTaken" -> toast("User is already registered!")
+            "passwordWeak" -> toast("Password is too short!")
+            "invalidEmail" -> toast("Please enter a valid email-address!")
+            "enterEmail" -> toast("Please enter an email-address!")
+            "enterPassword" -> toast("Please enter a password!")
+            "wrong" -> toast("Email or Password is wrong!")
+            else -> toast("Something went wrong ...")
+        }
     }
 }
