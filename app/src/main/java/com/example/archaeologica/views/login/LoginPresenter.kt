@@ -7,45 +7,41 @@ import com.example.archaeologica.views.VIEW
 
 class LoginPresenter(view: BaseView) : BasePresenter(view) {
 
-    var user = UsersModel()
-
     fun doLogin(email:String,password:String){
-
         if (!email.contains('@')) view?.onReaction("invalidEmail")
         else{
-            if (searchforuser(email)) view?.onReaction("userTaken")
-            else{
-                if (password.length<8) view?.onReaction("passwordWeak")
+            if (!searchforuser(email)) view?.onReaction("wrong")
+            else {
+                val allUsers = app.users.findAll()
+                val current = allUsers.find {x -> x.email == email}
+                if(current?.password != password) view?.onReaction("wrong")
                 else{
-                    user.email=email
-                    user.password=password
-                    app.users.create(user)
-                    view?.navigateTo(VIEW.LIST, 0, "user", user)
+                    view?.navigateTo(VIEW.LIST, 0, "user", current)
                 }
             }
         }
     }
 
     fun doRegister(email:String,password:String){
-
         if (!email.contains('@')) view?.onReaction("invalidEmail")
         else{
             if (searchforuser(email)) view?.onReaction("userTaken")
             else{
                 if (password.length<8) view?.onReaction("passwordWeak")
                 else{
+                    val user = UsersModel()
                     user.email=email
                     user.password=password
                     app.users.create(user)
-                    view?.navigateTo(VIEW.LIST, 0, "user", user)
+                    val allUsers = app.users.findAll()
+                    view?.navigateTo(VIEW.LIST, 0, "user", allUsers.find {x -> x.email == email})
                 }
             }
         }
     }
 
     fun searchforuser(email : String) : Boolean {
-        val allUsers = mutableListOf<UsersModel>()
-        allUsers.filter {it.email == email}
-        return allUsers.any()
+        val allUsers = app.users.findAll()
+        return allUsers.any{x -> x.email == email}
     }
 }

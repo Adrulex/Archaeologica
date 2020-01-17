@@ -35,7 +35,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   init {
     if (view.intent.hasExtra("placemark_edit")) {
       edit = true
-      placemark = view.intent.extras?.getParcelable<PlacemarkModel>("placemark_edit")!!
+      placemark = view.intent.extras?.getParcelable("placemark_edit")!!
       view.showPlacemark(placemark)
     } else {
       if (checkLocationPermissions(view)) {

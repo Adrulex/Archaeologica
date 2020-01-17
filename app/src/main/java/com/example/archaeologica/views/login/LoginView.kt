@@ -47,4 +47,9 @@ class LoginView : BaseView(), AnkoLogger {
             else -> toast("Something went wrong ...")
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        password.text.clear()
+    }
 }

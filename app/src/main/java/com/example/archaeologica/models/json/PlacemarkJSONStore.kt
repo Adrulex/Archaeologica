@@ -30,15 +30,16 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
     }
   }
 
-  override fun findAll(user : UsersModel): MutableList<PlacemarkModel> {
+  override fun findAll(user : UsersModel): List<PlacemarkModel> {
     currentUser = user
-    val filtered = mutableListOf<PlacemarkModel>()
-    filtered.filter {it.userid == user.id}
+    val filtered = placemarks
+    filtered.filter {x -> x.userid == user.id}
     return filtered
   }
 
   override fun create(placemark: PlacemarkModel) {
     placemark.id = placemarkgenerateRandomId()
+    placemark.userid = currentUser.id
     placemarks.add(placemark)
     serialize()
   }
