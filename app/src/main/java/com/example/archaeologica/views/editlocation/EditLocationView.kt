@@ -1,6 +1,5 @@
 package com.example.archaeologica.views.editlocation
 
-
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
@@ -15,6 +14,7 @@ class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.O
 
   lateinit var presenter: EditLocationPresenter
 
+  @SuppressLint("SetTextI18n")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_edit_location)
@@ -28,6 +28,9 @@ class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.O
       it.setOnMarkerClickListener(this)
       presenter.doConfigureMap(it)
     }
+
+    lat.text = "Lat\n" + "%.6f".format(presenter.location.lat)
+    lng.text = "Lng\n" + "%.6f".format(presenter.location.lng)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -35,6 +38,7 @@ class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.O
     return super.onCreateOptionsMenu(menu)
   }
 
+  @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
       R.id.item_save -> {
@@ -48,8 +52,8 @@ class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.O
 
   @SuppressLint("SetTextI18n")
   override fun onMarkerDrag(marker: Marker) {
-    lat.text = "%.3f".format(marker.position.latitude)
-    lng.text = "%.3f".format(marker.position.longitude)
+    lat.text = "Lat\n" + "%.6f".format(marker.position.latitude)
+    lng.text = "Lng\n" + "%.6f".format(marker.position.longitude)
   }
 
   override fun onMarkerDragEnd(marker: Marker) {

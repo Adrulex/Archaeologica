@@ -8,7 +8,9 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import com.example.archaeologica.R
+import java.io.ByteArrayOutputStream
 import java.io.IOException
+
 
 fun showImagePicker(parent: Activity, id: Int) {
   val intent = Intent()
@@ -40,6 +42,13 @@ fun readImageFromPath(context: Context, path: String): Bitmap? {
       val fileDescriptor = parcelFileDescriptor?.fileDescriptor
       bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor)
       parcelFileDescriptor?.close()
+
+      val stream = ByteArrayOutputStream()
+      bitmap.compress(Bitmap.CompressFormat.PNG, 10, stream)
+      val byteArray = stream.toByteArray()
+
+      bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+
     } catch (e: Exception) {
     }
   }

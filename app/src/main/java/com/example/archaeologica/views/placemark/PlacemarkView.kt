@@ -39,6 +39,7 @@ class PlacemarkView : BaseView(), AnkoLogger {
     placemarkImage3.setOnClickListener { presenter.doSelectImage(IMAGE3_REQUEST, placemarkTitle.text.toString(),description.text.toString()) }
     placemarkImage4.setOnClickListener { presenter.doSelectImage(IMAGE4_REQUEST, placemarkTitle.text.toString(),description.text.toString()) }
     checkvisited.setOnClickListener {presenter.doUpdateVisited() }
+    checkvisited.isChecked = placemark.visited
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {
