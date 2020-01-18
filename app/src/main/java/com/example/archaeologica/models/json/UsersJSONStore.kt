@@ -28,7 +28,7 @@ class UsersJSONStore(val context: Context) : UsersStore, AnkoLogger {
     }
   }
 
-  override fun findAll(): MutableList<UsersModel> {
+  override fun findAll(): List<UsersModel> {
     return users
   }
 
@@ -54,7 +54,7 @@ class UsersJSONStore(val context: Context) : UsersStore, AnkoLogger {
   }
 
   override fun findById(id:Long) : UsersModel? {
-    return users.find { it.id == id }
+    return users.find {u -> u.id == id }
   }
 
   private fun serialize() {

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_placemark_list.*
 import com.example.archaeologica.R
 import com.example.archaeologica.models.PlacemarkModel
+import com.example.archaeologica.models.UsersModel
 import com.example.archaeologica.views.BaseView
 import org.jetbrains.anko.toast
 
@@ -66,6 +67,6 @@ class PlacemarkListView :  BaseView(), PlacemarkListener {
       .setNeutralButton("Cancel"){_,_ -> }
     val dialog: AlertDialog = builder.create()
     dialog.show()
-
   }
+
 }

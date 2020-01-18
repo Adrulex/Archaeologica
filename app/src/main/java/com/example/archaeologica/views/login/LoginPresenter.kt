@@ -16,7 +16,8 @@ class LoginPresenter(view: BaseView) : BasePresenter(view) {
                 val current = allUsers.find {x -> x.email == email}
                 if(current?.password != password) view?.onReaction("wrong")
                 else{
-                    view?.navigateTo(VIEW.LIST, 0, "user", current)
+                    app.activeUser = current.id
+                    view?.navigateTo(VIEW.LIST)
                 }
             }
         }
@@ -34,7 +35,9 @@ class LoginPresenter(view: BaseView) : BasePresenter(view) {
                     user.password=password
                     app.users.create(user)
                     val allUsers = app.users.findAll()
-                    view?.navigateTo(VIEW.LIST, 0, "user", allUsers.find {x -> x.email == email})
+                    val current = allUsers.find {x -> x.email == email}
+                    app.activeUser = current?.id!!
+                    view?.navigateTo(VIEW.LIST)
                 }
             }
         }

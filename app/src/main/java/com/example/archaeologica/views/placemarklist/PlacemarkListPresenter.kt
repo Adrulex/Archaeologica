@@ -15,16 +15,17 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doGotoLogin(){
+    app.activeUser = 0
     view?.finish()
   }
 
   fun doEditPlacemark(placemark: PlacemarkModel) {
-    view?.navigateTo(VIEW.PLACEMARK, 0, "placemark_edit", placemark)
+    view?.navigateTo(VIEW.PLACEMARK, 0, "placemark_edit",placemark)
   }
 
   fun loadPlacemarks() {
     doAsync {
-      val placemarks = app.placemarks.findAll(view?.intent?.extras?.getParcelable("user")!!)
+      val placemarks = app.placemarks.findAll(app.activeUser)
       uiThread {
         view?.showPlacemarks(placemarks)
       }

@@ -8,7 +8,6 @@ import org.jetbrains.anko.AnkoLogger
 import com.example.archaeologica.helpers.*
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.models.PlacemarkStore
-import com.example.archaeologica.models.UsersModel
 import java.util.*
 
 val PLACEMARK_JSON_FILE = "placemarks.json"
@@ -22,7 +21,6 @@ fun placemarkgenerateRandomId(): Long {
 class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
 
   var placemarks = mutableListOf<PlacemarkModel>()
-  var currentUser = UsersModel()
 
   init {
     if (exists(context, PLACEMARK_JSON_FILE)) {
@@ -30,23 +28,19 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
     }
   }
 
-  override fun findAll(user : UsersModel): List<PlacemarkModel> {
-    currentUser = user
-    val filtered = placemarks
-    filtered.filter {x -> x.userid == user.id}
-    return filtered
+  override fun findAll(User : Long): List<PlacemarkModel> {
+    return placemarks.filter { x -> x.userid == User}
   }
 
-  override fun create(placemark: PlacemarkModel) {
+  override fun create(placemark: PlacemarkModel, User: Long) {
     placemark.id = placemarkgenerateRandomId()
-    placemark.userid = currentUser.id
+    placemark.userid = User
     placemarks.add(placemark)
     serialize()
   }
 
   override fun update(placemark: PlacemarkModel) {
-    val placemarksList = findAll(currentUser) as ArrayList<PlacemarkModel>
-    val foundPlacemark: PlacemarkModel? = placemarksList.find { p -> p.id == placemark.id }
+    val foundPlacemark: PlacemarkModel? = placemarks.find { p -> p.id == placemark.id }
     if (foundPlacemark != null) {
       foundPlacemark.title = placemark.title
       foundPlacemark.description = placemark.description
@@ -70,7 +64,7 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
   }
 
   override fun findById(id:Long) : PlacemarkModel? {
-    return placemarks.find { it.id == id }
+    return placemarks.find {p -> p.id == id }
   }
 
   private fun serialize() {

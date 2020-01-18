@@ -112,7 +112,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
       if (edit) {
         app.placemarks.update(placemark)
       } else {
-        app.placemarks.create(placemark)
+        app.placemarks.create(placemark, app.activeUser)
       }
       uiThread {
         view?.finish()
@@ -143,7 +143,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doSetLocation() {
-    view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location", Location(placemark.lat, placemark.lng, placemark.zoom))
+    view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location",Location(placemark.lat, placemark.lng, placemark.zoom))
   }
 
   override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {

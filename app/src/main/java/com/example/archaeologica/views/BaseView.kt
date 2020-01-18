@@ -7,12 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import org.jetbrains.anko.AnkoLogger
 import com.example.archaeologica.models.PlacemarkModel
-
 import com.example.archaeologica.views.editlocation.EditLocationView
 import com.example.archaeologica.views.login.LoginView
 import com.example.archaeologica.views.placemark.PlacemarkView
 import com.example.archaeologica.views.placemarklist.PlacemarkListView
-import java.util.*
 
 const val IMAGE1_REQUEST = 1
 const val IMAGE2_REQUEST = 2

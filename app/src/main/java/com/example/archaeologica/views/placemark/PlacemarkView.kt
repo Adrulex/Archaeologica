@@ -14,8 +14,7 @@ import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.*
 import kotlinx.android.synthetic.main.activity_placemark.description
 import kotlinx.android.synthetic.main.activity_placemark.placemarkTitle
-import kotlinx.android.synthetic.main.card_placemark.*
-import java.util.*
+
 
 class PlacemarkView : BaseView(), AnkoLogger {
 
