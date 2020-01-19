@@ -41,6 +41,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
       if (checkLocationPermissions(view)) {
         doSetCurrentLocation()
       }
+      view.showPlacemark(placemark)
     }
   }
 
@@ -127,9 +128,14 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doDelete() {
-    app.placemarks.delete(placemark)
-    app.activePlacemark = 0
-    view?.finish()
+    doAsync {
+      app.placemarks.delete(placemark)
+
+      uiThread {
+        app.activePlacemark = 0
+        view?.finish()
+      }
+    }
   }
 
   fun doSelectImage(Select : Int, Title : String, Description : String) {

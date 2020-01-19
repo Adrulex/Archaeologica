@@ -26,7 +26,7 @@ class SettingsPresenter(view: BaseView) : BasePresenter(view) {
     fun doSave() {
         val prefs: SharedPreferences = getDefaultSharedPreferences(view?.applicationContext)
         val email = prefs.getString("email", app.users.findById(user.id)?.email)!!
-        val password = prefs.getString("email", app.users.findById(user.id)?.password)!!
+        val password = prefs.getString("password", app.users.findById(user.id)?.password)!!
 
         if (!email.contains('@')) view?.onError("invalidEmail")
         else {
