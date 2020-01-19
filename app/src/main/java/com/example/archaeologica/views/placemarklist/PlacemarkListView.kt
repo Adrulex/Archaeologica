@@ -19,7 +19,7 @@ class PlacemarkListView :  BaseView(), PlacemarkListener {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark_list)
-    super.init(toolbar, false)
+    super.init(toolbarList, false)
 
     presenter = initPresenter(PlacemarkListPresenter(this)) as PlacemarkListPresenter
 
@@ -41,6 +41,7 @@ class PlacemarkListView :  BaseView(), PlacemarkListener {
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
       R.id.item_add -> presenter.doAddPlacemark()
+      R.id.item_settings -> presenter.doSettings()
     }
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     return super.onOptionsItemSelected(item)

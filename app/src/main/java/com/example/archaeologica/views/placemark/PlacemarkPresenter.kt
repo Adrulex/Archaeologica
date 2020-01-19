@@ -115,17 +115,20 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
         app.placemarks.create(placemark, app.activeUser)
       }
       uiThread {
+        app.activePlacemark = 0
         view?.finish()
       }
     }
   }
 
   fun doCancel() {
+    app.activePlacemark = 0
     view?.finish()
   }
 
   fun doDelete() {
     app.placemarks.delete(placemark)
+    app.activePlacemark = 0
     view?.finish()
   }
 
@@ -134,10 +137,10 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     placemark.description = Description
     view?.let {
       when (Select) {
-        1 -> showImagePicker(view!!, IMAGE1_REQUEST)
-        2 -> showImagePicker(view!!, IMAGE2_REQUEST)
-        3 -> showImagePicker(view!!, IMAGE3_REQUEST)
-        4 -> showImagePicker(view!!, IMAGE4_REQUEST)
+        0 -> showImagePicker(view!!, IMAGE1_REQUEST)
+        1 -> showImagePicker(view!!, IMAGE2_REQUEST)
+        2 -> showImagePicker(view!!, IMAGE3_REQUEST)
+        3 -> showImagePicker(view!!, IMAGE4_REQUEST)
       }
     }
   }
@@ -149,19 +152,19 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     when (requestCode) {
       IMAGE1_REQUEST -> {
-        placemark.image1 = data.data.toString()
+        placemark.images[0] = data.data.toString()
         view?.showPlacemark(placemark)
       }
       IMAGE2_REQUEST -> {
-        placemark.image2 = data.data.toString()
+        placemark.images[1] = data.data.toString()
         view?.showPlacemark(placemark)
       }
       IMAGE3_REQUEST -> {
-        placemark.image3 = data.data.toString()
+        placemark.images[2] = data.data.toString()
         view?.showPlacemark(placemark)
       }
       IMAGE4_REQUEST -> {
-        placemark.image4 = data.data.toString()
+        placemark.images[3] = data.data.toString()
         view?.showPlacemark(placemark)
       }
       LOCATION_REQUEST -> {

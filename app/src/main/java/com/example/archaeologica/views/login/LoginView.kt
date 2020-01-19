@@ -17,7 +17,7 @@ class LoginView : BaseView(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        super.init(toolbar, false)
+        super.init(toolbarLogin, false)
 
         presenter = initPresenter (LoginPresenter(this)) as LoginPresenter
 

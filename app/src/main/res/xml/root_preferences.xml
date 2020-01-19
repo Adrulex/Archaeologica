@@ -1,0 +1,45 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/user_header">
+
+        <EditTextPreference
+            android:title="email"
+            app:key="email"
+            app:title="@string/email"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:title="password"
+            app:key="password"
+            app:title="@string/password"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/sites_header">
+
+        <EditTextPreference
+            android:clickable="false"
+            android:focusable="false"
+            android:selectable="false"
+            android:title="sites"
+            app:key="sites"
+            app:selectable="false"
+            app:title="All Sites"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:clickable="false"
+            android:defaultValue="0"
+            android:focusable="false"
+            android:selectable="false"
+            android:title="visited"
+            app:key="visited"
+            app:selectable="false"
+            app:title="Sites visited"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

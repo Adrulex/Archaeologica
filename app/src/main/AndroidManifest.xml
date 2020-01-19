@@ -6,16 +6,16 @@
 
     <application
         android:name=".main.MainApp"
-        android:allowBackup="false"
+        android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:largeHeap="true">
-
-        <activity android:name=".views.splashscreen.SplashView"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".views.splashscreen.SplashView"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".views.login.LoginView"
             android:label="@string/title_activity_login">
@@ -32,7 +31,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".views.splashscreen.SplashView" />
         </activity>
-
         <activity
             android:name=".views.placemarklist.PlacemarkListView"
             android:label="@string/title_activity_placemark_list">
@@ -40,7 +38,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".views.login.LoginView" />
         </activity>
-
+        <activity
+            android:name=".views.settings.SettingsView"
+            android:label="@string/title_activity_settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.placemarklist.PlacemarkListView" />
+        </activity>
         <activity
             android:name=".views.placemark.PlacemarkView"
             android:label="@string/title_activity_placemark">
@@ -48,7 +52,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".views.placemarklist.PlacemarkListView" />
         </activity>
-
         <activity
             android:name=".views.editlocation.EditLocationView"
             android:label="@string/title_activity_edit_location">
@@ -60,6 +63,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
     </application>
+
 </manifest>

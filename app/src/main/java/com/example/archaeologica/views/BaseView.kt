@@ -11,15 +11,16 @@ import com.example.archaeologica.views.editlocation.EditLocationView
 import com.example.archaeologica.views.login.LoginView
 import com.example.archaeologica.views.placemark.PlacemarkView
 import com.example.archaeologica.views.placemarklist.PlacemarkListView
+import com.example.archaeologica.views.settings.SettingsView
 
-const val IMAGE1_REQUEST = 1
-const val IMAGE2_REQUEST = 2
-const val IMAGE3_REQUEST = 3
-const val IMAGE4_REQUEST = 4
-const val LOCATION_REQUEST = 5
+const val IMAGE1_REQUEST = 0
+const val IMAGE2_REQUEST = 1
+const val IMAGE3_REQUEST = 2
+const val IMAGE4_REQUEST = 3
+const val LOCATION_REQUEST = 4
 
 enum class VIEW {
-  LOCATION, PLACEMARK, LIST, LOGIN
+  LOCATION, PLACEMARK, LIST, LOGIN, SETTINGS
 }
 
 abstract class BaseView : AppCompatActivity(), AnkoLogger {
@@ -29,6 +30,7 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
   fun navigateTo(view: VIEW, code: Int = 0, key: String = "", value: Parcelable? = null) {
     var intent = Intent(this, PlacemarkListView::class.java)
     when (view) {
+      VIEW.SETTINGS -> intent = Intent(this, SettingsView::class.java)
       VIEW.LOCATION -> intent = Intent(this, EditLocationView::class.java)
       VIEW.PLACEMARK -> intent = Intent(this, PlacemarkView::class.java)
       VIEW.LIST -> intent = Intent(this, PlacemarkListView::class.java)
@@ -72,6 +74,8 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
   open fun showPlacemarks(placemarks: List<PlacemarkModel>) {}
   open fun showLocation(latitude : Double, longitude : Double) {}
   open fun onReaction(Reaction : String) {}
+  open fun onError(Reaction : String) {}
+  open fun onSave() {}
   open fun showProgress() {}
   open fun hideProgress() {}
 }

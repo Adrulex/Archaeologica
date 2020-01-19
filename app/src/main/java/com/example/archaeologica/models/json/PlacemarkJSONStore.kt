@@ -50,10 +50,10 @@ class PlacemarkJSONStore(val context: Context) : PlacemarkStore, AnkoLogger {
       foundPlacemark.lat = placemark.lat
       foundPlacemark.lng = placemark.lng
       foundPlacemark.zoom = placemark.zoom
-      if(placemark.image1 != "") foundPlacemark.image1 = placemark.image1
-      if(placemark.image2 != "") foundPlacemark.image2 = placemark.image2
-      if(placemark.image3 != "") foundPlacemark.image3 = placemark.image3
-      if(placemark.image4 != "") foundPlacemark.image4 = placemark.image4
+      if(placemark.images[0] != "") foundPlacemark.images[0] = placemark.images[0]
+      if(placemark.images[1] != "") foundPlacemark.images[1] = placemark.images[1]
+      if(placemark.images[2] != "") foundPlacemark.images[2] = placemark.images[2]
+      if(placemark.images[3] != "") foundPlacemark.images[3] = placemark.images[3]
     }
     serialize()
   }

@@ -38,7 +38,7 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
       <androidx.appcompat.widget.Toolbar
-          android:id="@+id/toolbarAdd"
+          android:id="@+id/toolbarPlacemark"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           app:titleTextColor="@color/colorPrimary" />
@@ -128,57 +128,47 @@
           app:layout_constraintStart_toEndOf="@+id/description"
           app:layout_constraintTop_toBottomOf="@+id/lat" />
 
-      <ImageView
-          android:id="@+id/placemarkImage1"
-          android:layout_width="0dp"
-          android:layout_height="80dp"
+      <androidx.cardview.widget.CardView
+          android:id="@+id/imagecard"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="16dp"
           android:layout_marginStart="8dp"
-          android:layout_marginTop="16dp"
           android:layout_marginEnd="8dp"
-          android:contentDescription="@string/hint_placemarkDescription"
-          app:layout_constraintEnd_toStartOf="@+id/placemarkImage2"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/description"
-          app:srcCompat="@mipmap/ic_launcher" />
-
-      <ImageView
-          android:id="@+id/placemarkImage2"
-          android:layout_width="0dp"
-          android:layout_height="80dp"
-          android:layout_marginStart="8dp"
-          android:layout_marginTop="16dp"
-          android:layout_marginEnd="8dp"
-          android:contentDescription="@string/hint_placemarkDescription"
+          android:layout_marginBottom="16dp"
+          app:cardCornerRadius="6dp"
+          app:layout_constraintBottom_toTopOf="@+id/mapView"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toEndOf="@+id/placemarkImage1"
-          app:layout_constraintTop_toBottomOf="@+id/description"
-          app:srcCompat="@mipmap/ic_launcher" />
-
-      <ImageView
-          android:id="@+id/placemarkImage3"
-          android:layout_width="0dp"
-          android:layout_height="80dp"
-          android:layout_marginStart="8dp"
-          android:layout_marginTop="16dp"
-          android:layout_marginEnd="8dp"
-          android:contentDescription="@string/hint_placemarkDescription"
-          app:layout_constraintEnd_toStartOf="@+id/placemarkImage4"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/placemarkImage1"
-          app:srcCompat="@mipmap/ic_launcher" />
+          app:layout_constraintTop_toBottomOf="@+id/description">
 
-      <ImageView
-          android:id="@+id/placemarkImage4"
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:sliderAnimationDuration="400"
+            app:sliderCircularHandlerEnabled="true"
+            app:sliderIndicatorAnimationDuration="400"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="2dp"
+            app:sliderIndicatorRadius="1dp"
+            app:sliderIndicatorSelectedColor="@color/colorAccent"
+            app:sliderIndicatorUnselectedColor="@android:color/darker_gray"
+            app:sliderScrollTimeInSec="1" />
+      </androidx.cardview.widget.CardView>
+
+      <Button
+          android:id="@+id/button"
           android:layout_width="0dp"
-          android:layout_height="80dp"
-          android:layout_marginStart="8dp"
-          android:layout_marginTop="16dp"
-          android:layout_marginEnd="8dp"
-          android:contentDescription="@string/hint_placemarkDescription"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toEndOf="@+id/placemarkImage3"
-          app:layout_constraintTop_toBottomOf="@+id/placemarkImage2"
-          app:srcCompat="@mipmap/ic_launcher" />
+          android:layout_height="0dp"
+          android:alpha="0"
+          app:layout_constraintBottom_toBottomOf="@id/imagecard"
+          app:layout_constraintEnd_toEndOf="@id/imagecard"
+          app:layout_constraintStart_toStartOf="@id/imagecard"
+          app:layout_constraintTop_toTopOf="@id/imagecard"
+          tools:visibility="visible" />
 
       <com.google.android.gms.maps.MapView
           android:id="@+id/mapView"
@@ -189,7 +179,7 @@
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="1.0"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/placemarkImage3" />
+          app:layout_constraintTop_toBottomOf="@+id/imagecard" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

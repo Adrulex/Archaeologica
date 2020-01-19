@@ -14,6 +14,7 @@ class MainApp : Application(), AnkoLogger {
   lateinit var placemarks: PlacemarkStore
   lateinit var users: UsersStore
   var activeUser: Long = 0
+  var activePlacemark: Long = 0
 
   override fun onCreate() {
     super.onCreate()
