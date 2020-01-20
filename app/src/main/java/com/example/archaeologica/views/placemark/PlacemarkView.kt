@@ -2,17 +2,16 @@ package com.example.archaeologica.views.placemark
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import com.example.archaeologica.R
+import com.example.archaeologica.models.Location
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.*
 import com.smarteist.autoimageslider.IndicatorAnimations
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import kotlinx.android.synthetic.main.activity_placemark.*
-import kotlinx.android.synthetic.main.image_slider_layout_item.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 
@@ -42,7 +41,7 @@ class PlacemarkView : BaseView(), AnkoLogger {
     placemarkTitle.setText(placemark.title)
     description.setText(placemark.description)
     checkvisited.isChecked = placemark.visited
-    this.showLocation(placemark.lat, placemark.lng)
+    this.showLocation(placemark.location)
 
     val sliderView: SliderView = findViewById(R.id.imageSlider)
     val adapter = PlacemarkSliderAdapter(this,placemark)
@@ -56,9 +55,9 @@ class PlacemarkView : BaseView(), AnkoLogger {
   }
 
   @SuppressLint("SetTextI18n")
-  override fun showLocation(latitude : Double, longitude : Double) {
-    lat.text = "Lat: %.3f".format(latitude)
-    lng.text = "Lng: %.3f".format(longitude)
+  override fun showLocation(location: Location) {
+    lat.text = "Lat: %.3f".format(location.lat)
+    lng.text = "Lng: %.3f".format(location.lng)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {

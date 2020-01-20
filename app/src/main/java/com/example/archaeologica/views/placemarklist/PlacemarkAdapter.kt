@@ -40,7 +40,7 @@ class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
     @SuppressLint("SetTextI18n")
     fun bind(placemark: PlacemarkModel, listener: PlacemarkListener) {
       itemView.placemarkTitle.text = placemark.title
-      itemView.latlng.text = "Lat: " + "%.3f".format(placemark.lat) + "   |   Lng: " + "%.3f".format(placemark.lng)
+      itemView.latlng.text = "Lat: " + "%.3f".format(placemark.location.lat) + "   |   Lng: " + "%.3f".format(placemark.location.lng)
       itemView.setOnClickListener { listener.onPlacemarkClick(placemark) }
         itemView.checkBox.isChecked = placemark.visited
         itemView.datevisited.text = placemark.datevisited

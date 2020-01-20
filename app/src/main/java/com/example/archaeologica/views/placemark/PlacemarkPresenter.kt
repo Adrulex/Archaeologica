@@ -41,13 +41,14 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
       if (checkLocationPermissions(view)) {
         doSetCurrentLocation()
       }
+      view.showPlacemark(placemark)
     }
   }
 
   @SuppressLint("MissingPermission")
   fun doSetCurrentLocation() {
     locationService.lastLocation.addOnSuccessListener {
-      locationUpdate(it.latitude, it.longitude)
+      locationUpdate(Location(it.latitude, it.longitude))
     }
   }
 
@@ -55,9 +56,9 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   fun doResartLocationUpdates() {
     val locationCallback = object : LocationCallback() {
       override fun onLocationResult(locationResult: LocationResult?) {
-        if (locationResult != null && locationResult.locations != null) {
+        if (locationResult != null) {
           val l = locationResult.locations.last()
-          locationUpdate(l.latitude, l.longitude)
+          locationUpdate(Location(l.latitude, l.longitude))
         }
       }
     }
@@ -70,26 +71,24 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     if (isPermissionGranted(requestCode, grantResults)) {
       doSetCurrentLocation()
     } else {
-      locationUpdate(defaultLocation.lat, defaultLocation.lng)
+      locationUpdate(defaultLocation)
     }
   }
 
   fun doConfigureMap(m: GoogleMap) {
     map = m
-    locationUpdate(placemark.lat, placemark.lng)
+    locationUpdate(placemark.location)
   }
 
-  fun locationUpdate(lat: Double, lng: Double) {
-    placemark.lat = lat
-    placemark.lng = lng
-    placemark.zoom = 15f
+  fun locationUpdate(location : Location) {
+    placemark.location = location
+    placemark.location.zoom = 15f
     map?.clear()
     map?.uiSettings?.isZoomControlsEnabled = false
-    val options =
-      MarkerOptions().title(placemark.title).position(LatLng(placemark.lat, placemark.lng))
+    val options = MarkerOptions().title(placemark.title).position(LatLng(placemark.location.lat, placemark.location.lng))
     map?.addMarker(options)
-    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(placemark.lat, placemark.lng), placemark.zoom))
-    view?.showLocation(placemark.lat, placemark.lng)
+    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(placemark.location.lat, placemark.location.lng), placemark.location.zoom))
+    view?.showLocation(placemark.location)
   }
 
   fun doUpdateVisited(){
@@ -112,7 +111,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
       if (edit) {
         app.placemarks.update(placemark)
       } else {
-        app.placemarks.create(placemark, app.activeUser)
+        app.placemarks.create(placemark)
       }
       uiThread {
         app.activePlacemark = 0
@@ -146,7 +145,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   }
 
   fun doSetLocation() {
-    view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location",Location(placemark.lat, placemark.lng, placemark.zoom))
+    view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location",Location(placemark.location.lat, placemark.location.lng, placemark.location.zoom))
   }
 
   override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -169,10 +168,10 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
       }
       LOCATION_REQUEST -> {
         val location = data.extras?.getParcelable<Location>("location")!!
-        placemark.lat = location.lat
-        placemark.lng = location.lng
-        placemark.zoom = location.zoom
-        locationUpdate(placemark.lat, placemark.lng)
+        placemark.location.lat = location.lat
+        placemark.location.lng = location.lng
+        placemark.location.zoom = location.zoom
+        locationUpdate(location)
       }
     }
   }

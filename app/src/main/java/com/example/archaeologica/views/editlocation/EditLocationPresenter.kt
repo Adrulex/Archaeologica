@@ -15,14 +15,14 @@ class EditLocationPresenter(view: BaseView) : BasePresenter(view) {
   var location = Location()
 
   init {
-    location = view.intent.extras?.getParcelable<Location>("location")!!
+    location = view.intent.extras?.getParcelable("location")!!
   }
 
   fun doConfigureMap(map: GoogleMap) {
     val loc = LatLng(location.lat, location.lng)
     val options = MarkerOptions()
       .title("Placemark")
-      .snippet("GPS : " + loc.toString())
+      .snippet("GPS : $loc")
       .draggable(true)
       .position(loc)
     map.addMarker(options)
@@ -43,6 +43,6 @@ class EditLocationPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doUpdateMarker(marker: Marker) {
     val loc = LatLng(location.lat, location.lng)
-    marker.setSnippet("GPS : " + loc.toString())
+    marker.snippet = "GPS : $loc"
   }
 }

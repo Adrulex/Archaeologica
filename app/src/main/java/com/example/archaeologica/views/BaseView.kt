@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.archaeologica.models.Location
 import org.jetbrains.anko.AnkoLogger
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.editlocation.EditLocationView
@@ -20,7 +21,7 @@ const val IMAGE4_REQUEST = 3
 const val LOCATION_REQUEST = 4
 
 enum class VIEW {
-  LOCATION, PLACEMARK, LIST, LOGIN, SETTINGS
+  LOCATION, PLACEMARK, LIST, SETTINGS, LOGIN
 }
 
 abstract class BaseView : AppCompatActivity(), AnkoLogger {
@@ -72,8 +73,7 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
 
   open fun showPlacemark(placemark: PlacemarkModel) {}
   open fun showPlacemarks(placemarks: List<PlacemarkModel>) {}
-  open fun showLocation(latitude : Double, longitude : Double) {}
-  open fun onReaction(Reaction : String) {}
+  open fun showLocation(location: Location) {}
   open fun onError(Reaction : String) {}
   open fun onSave() {}
   open fun showProgress() {}
