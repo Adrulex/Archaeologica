@@ -41,6 +41,8 @@ class PlacemarkListView :  BaseView(), PlacemarkListener {
     when (item?.itemId) {
       R.id.item_add -> presenter.doAddPlacemark()
       R.id.item_settings -> presenter.doSettings()
+      R.id.item_map -> presenter.doMap()
+      R.id.item_search -> presenter.doSearch()
     }
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     return super.onOptionsItemSelected(item)

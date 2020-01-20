@@ -6,16 +6,13 @@ import com.example.archaeologica.models.firebase.PlacemarkFireStore
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
-
 class MainApp : Application(), AnkoLogger {
 
   lateinit var placemarks: PlacemarkStore
-  var activePlacemark: Long = 0
 
   override fun onCreate() {
     super.onCreate()
     placemarks = PlacemarkFireStore(applicationContext)
     info("Placemark started")
-
   }
 }

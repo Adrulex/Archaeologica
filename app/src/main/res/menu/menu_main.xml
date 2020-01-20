@@ -14,4 +14,15 @@
     android:title="@string/menu_addPlacemark"
     app:showAsAction="ifRoom" />
 
+  <item
+      android:id="@+id/item_search"
+      android:icon="@android:drawable/ic_menu_search"
+      android:title="@string/menu_searchPlacemark"
+      app:showAsAction="ifRoom" />
+
+  <item
+      android:id="@+id/item_map"
+      android:icon="@android:drawable/ic_menu_mapmode"
+      android:title="@string/menu_MapPlacemarks"
+      app:showAsAction="ifRoom" />
 </menu>

@@ -23,8 +23,15 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
     view?.navigateTo(VIEW.SETTINGS)
   }
 
+  fun doSearch(){
+
+  }
+
+  fun doMap(){
+    view?.navigateTo(VIEW.MAP)
+  }
+
   fun doEditPlacemark(placemark: PlacemarkModel) {
-    app.activePlacemark = placemark.id
     view?.navigateTo(VIEW.PLACEMARK, 0, "placemark_edit",placemark)
   }
 

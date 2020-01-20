@@ -10,6 +10,7 @@ import org.jetbrains.anko.AnkoLogger
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.editlocation.EditLocationView
 import com.example.archaeologica.views.login.LoginView
+import com.example.archaeologica.views.map.PlacemarkMapView
 import com.example.archaeologica.views.placemark.PlacemarkView
 import com.example.archaeologica.views.placemarklist.PlacemarkListView
 import com.example.archaeologica.views.settings.SettingsView
@@ -21,7 +22,7 @@ const val IMAGE4_REQUEST = 3
 const val LOCATION_REQUEST = 4
 
 enum class VIEW {
-  LOCATION, PLACEMARK, LIST, SETTINGS, LOGIN
+  LOCATION, PLACEMARK, LIST, SETTINGS, LOGIN, MAP, NAVIGATOR
 }
 
 abstract class BaseView : AppCompatActivity(), AnkoLogger {
@@ -36,6 +37,8 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
       VIEW.PLACEMARK -> intent = Intent(this, PlacemarkView::class.java)
       VIEW.LIST -> intent = Intent(this, PlacemarkListView::class.java)
       VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
+      VIEW.MAP -> intent = Intent(this, PlacemarkMapView::class.java)
+      VIEW.NAVIGATOR -> {}
     }
     if (key != "") {
       intent.putExtra(key, value)
@@ -74,7 +77,6 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
   open fun showPlacemark(placemark: PlacemarkModel) {}
   open fun showPlacemarks(placemarks: List<PlacemarkModel>) {}
   open fun showLocation(location: Location) {}
-  open fun onError(Reaction : String) {}
   open fun onSave() {}
   open fun showProgress() {}
   open fun hideProgress() {}

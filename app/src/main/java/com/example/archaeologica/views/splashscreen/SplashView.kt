@@ -27,4 +27,7 @@ class SplashView : BaseView(), AnkoLogger {
             presenter.onStartup()
         }, 2000)
     }
+
+    override fun onBackPressed() { /*do nothing*/ }
 }
+

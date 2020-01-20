@@ -6,10 +6,11 @@ import com.example.archaeologica.views.VIEW
 
 class SplashPresenter(view: BaseView) : BasePresenter(view) {
 
-    init{}
+    init{ /* do nothing */ }
 
     fun onStartup(){
         view?.navigateTo(VIEW.LOGIN)
         view?.finish()
     }
+
 }

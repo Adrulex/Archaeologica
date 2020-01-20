@@ -35,5 +35,9 @@
     <string name="user_header">User Data</string>
     <string name="sites_header">Sites</string>
     <string name="menu_saveSettings">Save</string>
+    <string name="menu_searchPlacemark">Search</string>
+    <string name="menu_MapPlacemarks">Map</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
 
 </resources>

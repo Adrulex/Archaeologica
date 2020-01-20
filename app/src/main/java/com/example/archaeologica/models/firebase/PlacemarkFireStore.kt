@@ -48,6 +48,8 @@ class PlacemarkFireStore(val context: Context) : PlacemarkStore, AnkoLogger {
       foundPlacemark.images = placemark.images
       foundPlacemark.datevisited = placemark.datevisited
       foundPlacemark.visited = placemark.visited
+      foundPlacemark.fav = placemark.fav
+      foundPlacemark.rating = placemark.rating
       foundPlacemark.location = placemark.location
     }
 

@@ -53,14 +53,4 @@ class SettingsView : BaseView(), AnkoLogger {
         toast("Settings saved!")
         finish()
     }
-
-    override fun onError(Reaction:String){
-        when(Reaction)
-        {
-            "userTaken" -> toast("User is already registered!")
-            "passwordWeak" -> toast("Password is too short!")
-            "invalidEmail" -> toast("Please enter a valid email-address!")
-            else -> toast("Something went wrong ...")
-        }
-    }
 }

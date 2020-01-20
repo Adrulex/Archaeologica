@@ -114,20 +114,17 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
         app.placemarks.create(placemark)
       }
       uiThread {
-        app.activePlacemark = 0
         view?.finish()
       }
     }
   }
 
   fun doCancel() {
-    app.activePlacemark = 0
     view?.finish()
   }
 
   fun doDelete() {
     app.placemarks.delete(placemark)
-    app.activePlacemark = 0
     view?.finish()
   }
 
