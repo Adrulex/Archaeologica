@@ -39,5 +39,8 @@
     <string name="menu_MapPlacemarks">Map</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
+    <string name="menu_settingsPlacemark">Settings</string>
+    <string name="fav">favs</string>
+    <string name="nothing" />
 
 </resources>

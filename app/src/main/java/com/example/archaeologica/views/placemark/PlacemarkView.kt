@@ -35,12 +35,14 @@ class PlacemarkView : BaseView(), AnkoLogger {
     }
 
     checkvisited.setOnClickListener {presenter.doUpdateVisited() }
+    checkfav.setOnClickListener {presenter.doUpdateFav() }
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {
     placemarkTitle.setText(placemark.title)
     description.setText(placemark.description)
     checkvisited.isChecked = placemark.visited
+    checkfav.isChecked = placemark.fav
     this.showLocation(placemark.location)
 
     val sliderView: SliderView = findViewById(R.id.imageSlider)

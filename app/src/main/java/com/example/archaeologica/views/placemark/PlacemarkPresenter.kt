@@ -104,6 +104,10 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     placemark.datevisited = currentDate
   }
 
+  fun doUpdateFav(){
+    placemark.fav = !placemark.fav
+  }
+
   fun doAddOrSave(title: String, description: String) {
     placemark.title = title
     placemark.description = description

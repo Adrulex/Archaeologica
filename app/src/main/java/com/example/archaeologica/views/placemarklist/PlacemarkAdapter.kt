@@ -43,6 +43,7 @@ class PlacemarkAdapter constructor(private var placemarks: List<PlacemarkModel>,
       itemView.latlng.text = "Lat: " + "%.3f".format(placemark.location.lat) + "   |   Lng: " + "%.3f".format(placemark.location.lng)
       itemView.setOnClickListener { listener.onPlacemarkClick(placemark) }
         itemView.checkBox.isChecked = placemark.visited
+        itemView.checkFav.isChecked = placemark.fav
         itemView.datevisited.text = placemark.datevisited
     }
   }

@@ -3,7 +3,9 @@ package com.example.archaeologica.views.placemarklist
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.*
+import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_placemark_list.*
 import com.example.archaeologica.R
@@ -32,6 +34,17 @@ class PlacemarkListView :  BaseView(), PlacemarkListener {
     recyclerView.adapter?.notifyDataSetChanged()
   }
 
+  fun doSearch(){
+    val builder: AlertDialog.Builder = AlertDialog.Builder(applicationContext)
+    val input = EditText(applicationContext)
+    input.inputType = InputType.TYPE_CLASS_TEXT
+    builder.setTitle("Search Site?")
+    builder.setView(input)
+    builder.setPositiveButton("Search") { dialog, which -> presenter.searchPlacemarks(input.text.toString() ) }
+    builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+    builder.create().show()
+  }
+
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     menuInflater.inflate(R.menu.menu_main, menu)
     return super.onCreateOptionsMenu(menu)
@@ -42,7 +55,7 @@ class PlacemarkListView :  BaseView(), PlacemarkListener {
       R.id.item_add -> presenter.doAddPlacemark()
       R.id.item_settings -> presenter.doSettings()
       R.id.item_map -> presenter.doMap()
-      R.id.item_search -> presenter.doSearch()
+      R.id.item_search -> {doSearch(); return true}
     }
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     return super.onOptionsItemSelected(item)

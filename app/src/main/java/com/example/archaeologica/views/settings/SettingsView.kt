@@ -6,6 +6,8 @@ import android.view.MenuItem
 import androidx.preference.PreferenceFragmentCompat
 import com.example.archaeologica.R
 import com.example.archaeologica.views.BaseView
+import com.example.archaeologica.views.VIEW
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.settings_activity.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
@@ -50,7 +52,8 @@ class SettingsView : BaseView(), AnkoLogger {
     }
 
     override fun onSave(){
-        toast("Settings saved!")
-        finish()
+        toast("Please re-authenticate with new credentials!")
+        FirebaseAuth.getInstance().signOut()
+        navigateTo(VIEW.LOGIN)
     }
 }

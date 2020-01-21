@@ -1,12 +1,19 @@
 package com.example.archaeologica.views.placemarklist
 
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.text.InputType
+import android.widget.EditText
+import androidx.annotation.UiThread
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.BasePresenter
 import com.example.archaeologica.views.BaseView
 import com.example.archaeologica.views.VIEW
 import com.google.firebase.auth.FirebaseAuth
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
+
 
 class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
 
@@ -23,10 +30,6 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
     view?.navigateTo(VIEW.SETTINGS)
   }
 
-  fun doSearch(){
-
-  }
-
   fun doMap(){
     view?.navigateTo(VIEW.MAP)
   }
@@ -39,6 +42,17 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
     doAsync {
       val placemarks = app.placemarks.findAll()
       uiThread {
+        view?.showPlacemarks(placemarks)
+      }
+    }
+  }
+
+  fun searchPlacemarks(search : String) {
+    doAsync {
+      val placemarks = app.placemarks.findAll()
+      placemarks.filter{p -> p.title == search}
+      uiThread {
+        view?.toast("Found " + placemarks.size + "Sites with Title '" + search + "' !")
         view?.showPlacemarks(placemarks)
       }
     }

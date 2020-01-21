@@ -14,12 +14,11 @@
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_below="@+id/latlng"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         android:layout_toEndOf="@+id/imageIcon"
         android:clickable="false"
         android:focusable="false"
@@ -62,15 +61,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/latlng"
-        android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/checkFav"
         android:layout_toEndOf="@+id/checkBox"
         android:clickable="false"
         android:text="@string/notVisited"
         android:textAlignment="textStart"
-        android:textSize="20sp" />
+        android:textSize="22sp" />
+
+    <ToggleButton
+        android:id="@+id/checkFav"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/latlng"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/check"
+        android:text=""
+        android:textOff=""
+        android:textOn=""
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
   </RelativeLayout>
 </androidx.cardview.widget.CardView>
