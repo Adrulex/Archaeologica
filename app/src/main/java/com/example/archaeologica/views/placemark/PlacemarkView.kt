@@ -19,15 +19,17 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 
 
-class PlacemarkView : BaseView(), AnkoLogger, RatingBar.OnRatingBarChangeListener {
+class PlacemarkView : BaseView(), AnkoLogger, RatingBar.OnRatingBarChangeListener, ImageListener {
 
   lateinit var presenter: PlacemarkPresenter
+  lateinit var sliderView: SliderView
   var placemark = PlacemarkModel()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark)
     super.init(toolbarPlacemark, true)
+    sliderView = findViewById(R.id.imageSlider)
 
     presenter = initPresenter (PlacemarkPresenter(this)) as PlacemarkPresenter
 
@@ -52,15 +54,13 @@ class PlacemarkView : BaseView(), AnkoLogger, RatingBar.OnRatingBarChangeListene
     ratingBar.rating = placemark.rating
     this.showLocation(placemark.location)
 
-    val sliderView: SliderView = findViewById(R.id.imageSlider)
-    val adapter = PlacemarkSliderAdapter(this,placemark)
+    val adapter = PlacemarkSliderAdapter(placemark,this)
     sliderView.sliderAdapter = adapter
     sliderView.setIndicatorAnimation(IndicatorAnimations.DROP)
     sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
-    sliderView.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_RIGHT
-    sliderView.scrollTimeInSec = 2
+    sliderView.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH
+    sliderView.scrollTimeInSec = 4
     sliderView.startAutoCycle()
-    button.setOnClickListener { presenter.doSelectImage(sliderView.currentPagePosition, placemarkTitle.text.toString(),description.text.toString()) }
   }
 
   @SuppressLint("SetTextI18n")
@@ -72,6 +72,10 @@ class PlacemarkView : BaseView(), AnkoLogger, RatingBar.OnRatingBarChangeListene
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_placemark, menu)
     return super.onCreateOptionsMenu(menu)
+  }
+
+  override fun onImageClick() {
+    presenter.doSelectImage(sliderView.currentPagePosition, placemarkTitle.text.toString(),description.text.toString())
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -1,18 +1,18 @@
 package com.example.archaeologica.views.placemark
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.provider.MediaStore
+import androidx.core.net.toUri
+import com.example.archaeologica.R
 import com.example.archaeologica.helpers.checkLocationPermissions
-import com.example.archaeologica.helpers.createDefaultLocationRequest
 import com.example.archaeologica.helpers.isPermissionGranted
-import com.example.archaeologica.helpers.showImagePicker
 import com.example.archaeologica.models.Location
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.*
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -125,6 +125,11 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     view?.finish()
   }
 
+  fun doSetLocation() {
+    view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location",Location(placemark.location.lat, placemark.location.lng, placemark.location.zoom))
+  }
+
+
   fun doSelectImage(Select : Int, Title : String, Description : String) {
     placemark.title = Title
     placemark.description = Description
@@ -138,11 +143,26 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     }
   }
 
-  fun doSetLocation() {
-    view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location",Location(placemark.location.lat, placemark.location.lng, placemark.location.zoom))
+  fun showImagePicker(parent: Activity, id: Int) {
+
+    val pickIntent = Intent()
+    pickIntent.type = "image/*"
+    pickIntent.action = Intent.ACTION_OPEN_DOCUMENT
+    pickIntent.addCategory(Intent.CATEGORY_OPENABLE)
+
+    val fileUri : Uri = "".toUri()
+    val camIntent = Intent()
+    camIntent.type = "image/*"
+    camIntent.action = MediaStore.ACTION_IMAGE_CAPTURE
+    camIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
+
+    val chooser = Intent.createChooser(pickIntent, R.string.select_placemark_image.toString())
+    chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(camIntent))
+    parent.startActivityForResult(chooser, id)
   }
 
   override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+
     when (requestCode) {
       IMAGE1_REQUEST -> {
         placemark.images[0] = data.data.toString()

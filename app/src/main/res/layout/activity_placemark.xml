@@ -179,6 +179,10 @@
             android:id="@+id/imageSlider"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:translationZ="30dp"
             app:sliderAnimationDuration="400"
             app:sliderCircularHandlerEnabled="true"
             app:sliderIndicatorAnimationDuration="400"
@@ -193,17 +197,6 @@
 
         </com.smarteist.autoimageslider.SliderView>
       </androidx.cardview.widget.CardView>
-
-      <Button
-          android:id="@+id/button"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:alpha="0"
-          app:layout_constraintBottom_toBottomOf="@id/imagecard"
-          app:layout_constraintEnd_toEndOf="@id/imagecard"
-          app:layout_constraintStart_toStartOf="@id/imagecard"
-          app:layout_constraintTop_toTopOf="@id/imagecard"
-          tools:visibility="visible" />
 
       <com.google.android.gms.maps.MapView
           android:id="@+id/mapView"

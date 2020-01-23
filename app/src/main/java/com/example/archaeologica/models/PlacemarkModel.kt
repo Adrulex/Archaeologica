@@ -24,5 +24,5 @@ data class PlacemarkModel(@PrimaryKey(autoGenerate = true)
 @Parcelize
 data class Location(var lat: Double = 0.0,
                     var lng: Double = 0.0,
-                    var zoom: Float = 0f) : Parcelable
+                    var zoom: Float = 0.0f) : Parcelable
 

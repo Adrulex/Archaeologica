@@ -1,6 +1,6 @@
 package com.example.archaeologica.views.placemark
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +10,12 @@ import com.example.archaeologica.R
 import com.example.archaeologica.models.PlacemarkModel
 import com.smarteist.autoimageslider.SliderViewAdapter
 
+interface ImageListener {
+    fun onImageClick()
+}
 
-class PlacemarkSliderAdapter(context: Context, private var placemark: PlacemarkModel) : SliderViewAdapter<PlacemarkSliderAdapter.SliderAdapterVH>() {
-    private val context: Context
+class PlacemarkSliderAdapter(private var placemark: PlacemarkModel, private val listener: ImageListener) : SliderViewAdapter<PlacemarkSliderAdapter.SliderAdapterVH>() {
+    @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup): SliderAdapterVH {
         val inflate: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.image_slider_layout_item, null)
@@ -20,27 +23,24 @@ class PlacemarkSliderAdapter(context: Context, private var placemark: PlacemarkM
     }
 
     override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
-            Glide.with(viewHolder.itemView)
-                .load( placemark.images[position])
-                .into(viewHolder.imageView)
+        Glide.with(viewHolder.itemView)
+            .load( placemark.images[position])
+            .into(viewHolder.imageView)
+
+        viewHolder.bind(listener)
     }
 
     override fun getCount(): Int { //slider view count could be dynamic size
         return placemark.images.size
     }
 
-    class SliderAdapterVH(itemView: View) :
+    class SliderAdapterVH(var itemView: View) :
         ViewHolder(itemView) {
-        var itemView: View
-        var imageView: ImageView
+        var imageView: ImageView = itemView.findViewById((R.id.iv_auto_image_slider))
 
-        init {
-            imageView = itemView.findViewById((R.id.iv_auto_image_slider))
-            this.itemView = itemView
+        fun bind(listener: ImageListener){
+            itemView.setOnClickListener{listener.onImageClick()}
         }
     }
 
-    init {
-        this.context = context
-    }
 }
