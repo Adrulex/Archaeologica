@@ -1,12 +1,10 @@
 package com.example.archaeologica.views
 
 import android.content.Intent
-
 import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.archaeologica.models.Location
-import org.jetbrains.anko.AnkoLogger
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.editlocation.EditLocationView
 import com.example.archaeologica.views.login.LoginView
@@ -14,6 +12,7 @@ import com.example.archaeologica.views.map.PlacemarkMapView
 import com.example.archaeologica.views.placemark.PlacemarkView
 import com.example.archaeologica.views.placemarklist.PlacemarkListView
 import com.example.archaeologica.views.settings.SettingsView
+import org.jetbrains.anko.AnkoLogger
 
 const val IMAGE1_REQUEST = 0
 const val IMAGE2_REQUEST = 1
@@ -32,11 +31,11 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
   fun navigateTo(view: VIEW, code: Int = 0, key: String = "", value: Parcelable? = null) {
     var intent = Intent(this, PlacemarkListView::class.java)
     when (view) {
+      VIEW.LOGIN -> intent = Intent(this, LoginView::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
       VIEW.SETTINGS -> intent = Intent(this, SettingsView::class.java)
       VIEW.LOCATION -> intent = Intent(this, EditLocationView::class.java)
       VIEW.PLACEMARK -> intent = Intent(this, PlacemarkView::class.java)
       VIEW.LIST -> intent = Intent(this, PlacemarkListView::class.java)
-      VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
       VIEW.MAP -> intent = Intent(this, PlacemarkMapView::class.java)
       VIEW.NAVIGATOR -> {}
     }

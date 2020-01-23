@@ -1,10 +1,5 @@
 package com.example.archaeologica.views.placemarklist
 
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.text.InputType
-import android.widget.EditText
-import androidx.annotation.UiThread
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.BasePresenter
 import com.example.archaeologica.views.BaseView
@@ -23,7 +18,7 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doGotoLogin(){
     FirebaseAuth.getInstance().signOut()
-    view?.finish()
+    view?.navigateTo(VIEW.LOGIN)
   }
 
   fun doSettings(){
@@ -50,9 +45,9 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
   fun searchPlacemarks(search : String) {
     doAsync {
       val placemarks = app.placemarks.findAll()
-      placemarks.filter{p -> p.title == search}
+      placemarks.filter{p -> p.title.contains(search)}
       uiThread {
-        view?.toast("Found " + placemarks.size + "Sites with Title '" + search + "' !")
+        view?.toast("Found " + placemarks.size + " Sites with Title '" + search + "'!")
         view?.showPlacemarks(placemarks)
       }
     }

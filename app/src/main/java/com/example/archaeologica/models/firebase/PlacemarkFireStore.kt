@@ -2,6 +2,7 @@ package com.example.archaeologica.models.firebase
 
 import android.content.Context
 import android.graphics.Bitmap
+import com.bumptech.glide.Glide
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.models.PlacemarkStore
 import com.google.firebase.auth.FirebaseAuth
@@ -73,13 +74,12 @@ class PlacemarkFireStore(val context: Context) : PlacemarkStore, AnkoLogger {
   fun updateImage(placemark: PlacemarkModel, index : Int) {
     if (placemark.images[index] != "") {
       val fileName = File(placemark.images[index])
-      val imageName = fileName.getName()
-
+      val imageName = fileName.name
       val imageRef = st.child("$userId/$imageName")
       val baos = ByteArrayOutputStream()
-      val bitmap = readImageFromPath(context, placemark.images[index])
+      val bitmap = Glide.with(context).asBitmap().load(placemark.images[index]).submit(500,500).get()
 
-      bitmap?.let {
+      bitmap.let {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
         val uploadTask = imageRef.putBytes(data)
