@@ -28,10 +28,9 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
 
   var map: GoogleMap? = null
   var placemark = PlacemarkModel()
-  var defaultLocation = Location(52.245696, -7.139102, 15f)
+  var defaultLocation = Location(49.0208841,12.0693126,13f)
   var edit = false
   var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
-  val locationRequest = createDefaultLocationRequest()
 
   init {
     if (view.intent.hasExtra("placemark_edit")) {
@@ -50,21 +49,6 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   fun doSetCurrentLocation() {
     locationService.lastLocation.addOnSuccessListener {
       locationUpdate(Location(it.latitude, it.longitude))
-    }
-  }
-
-  @SuppressLint("MissingPermission")
-  fun doResartLocationUpdates() {
-    val locationCallback = object : LocationCallback() {
-      override fun onLocationResult(locationResult: LocationResult?) {
-        if (locationResult != null) {
-          val l = locationResult.locations.last()
-          locationUpdate(Location(l.latitude, l.longitude))
-        }
-      }
-    }
-    if (!edit) {
-      locationService.requestLocationUpdates(locationRequest, locationCallback, null)
     }
   }
 
@@ -107,6 +91,10 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
 
   fun doUpdateFav(){
     placemark.fav = !placemark.fav
+  }
+
+  fun doUpdateRating(rating : Float){
+    placemark.rating = rating
   }
 
   fun doUpdateNotes(notes : String){

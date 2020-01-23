@@ -3,12 +3,14 @@ package com.example.archaeologica.views.placemark
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.RatingBar
 import androidx.core.widget.addTextChangedListener
 import com.example.archaeologica.R
 import com.example.archaeologica.models.Location
 import com.example.archaeologica.models.PlacemarkModel
-import com.example.archaeologica.views.*
+import com.example.archaeologica.views.BaseView
 import com.smarteist.autoimageslider.IndicatorAnimations
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
@@ -17,7 +19,7 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 
 
-class PlacemarkView : BaseView(), AnkoLogger {
+class PlacemarkView : BaseView(), AnkoLogger, RatingBar.OnRatingBarChangeListener {
 
   lateinit var presenter: PlacemarkPresenter
   var placemark = PlacemarkModel()
@@ -36,8 +38,9 @@ class PlacemarkView : BaseView(), AnkoLogger {
     }
 
     checkvisited.setOnClickListener {presenter.doUpdateVisited() }
-    checkfav.setOnClickListener {presenter.doUpdateFav() }
+    checkfav.setOnClickListener { presenter.doUpdateFav() }
     notes.addTextChangedListener { presenter.doUpdateNotes(notes.text.toString()) }
+    ratingBar.onRatingBarChangeListener = this
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {
@@ -46,6 +49,7 @@ class PlacemarkView : BaseView(), AnkoLogger {
     notes.setText(placemark.notes)
     checkvisited.isChecked = placemark.visited
     checkfav.isChecked = placemark.fav
+    ratingBar.rating = placemark.rating
     this.showLocation(placemark.location)
 
     val sliderView: SliderView = findViewById(R.id.imageSlider)
@@ -100,6 +104,11 @@ class PlacemarkView : BaseView(), AnkoLogger {
     }
   }
 
+  override fun onRatingChanged(bar: RatingBar?, rat: Float, user: Boolean) {
+    presenter.doUpdateRating(rat)
+  }
+
+
   override fun onBackPressed() {
     presenter.doCancel()
   }
@@ -122,7 +131,6 @@ class PlacemarkView : BaseView(), AnkoLogger {
   override fun onResume() {
     super.onResume()
     mapView.onResume()
-    presenter.doResartLocationUpdates()
   }
 
   override fun onSaveInstanceState(outState: Bundle) {

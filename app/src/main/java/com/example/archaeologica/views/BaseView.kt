@@ -21,7 +21,7 @@ const val IMAGE4_REQUEST = 3
 const val LOCATION_REQUEST = 4
 
 enum class VIEW {
-  LOCATION, PLACEMARK, LIST, SETTINGS, LOGIN, MAP, NAVIGATOR
+  LOCATION, PLACEMARK, LIST, SETTINGS, LOGIN, MAP
 }
 
 abstract class BaseView : AppCompatActivity(), AnkoLogger {
@@ -37,7 +37,6 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
       VIEW.PLACEMARK -> intent = Intent(this, PlacemarkView::class.java)
       VIEW.LIST -> intent = Intent(this, PlacemarkListView::class.java)
       VIEW.MAP -> intent = Intent(this, PlacemarkMapView::class.java)
-      VIEW.NAVIGATOR -> {}
     }
     if (key != "") {
       intent.putExtra(key, value)
