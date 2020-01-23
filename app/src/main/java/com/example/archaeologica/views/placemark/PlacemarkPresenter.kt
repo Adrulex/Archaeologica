@@ -2,6 +2,7 @@ package com.example.archaeologica.views.placemark
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import com.example.archaeologica.helpers.checkLocationPermissions
 import com.example.archaeologica.helpers.createDefaultLocationRequest
 import com.example.archaeologica.helpers.isPermissionGranted
@@ -19,8 +20,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import java.lang.Math.round
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -194,5 +193,31 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
       type="text/plain"
     }, "Share this Site through:")
     view?.startActivity(share)
+  }
+
+  fun doRoute(){
+
+    var lat = 0.0
+    var lng = 0.0
+
+    locationService.lastLocation.addOnSuccessListener {
+      lat = it.latitude
+      lng = it.longitude
+    }
+
+    val uri = java.lang.String.format(
+      Locale.ENGLISH,
+      "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)",
+      lat,
+      lng,
+      "Current Location",
+      placemark.location.lat,
+      placemark.location.lng,
+      placemark.title
+    )
+
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+    intent.setPackage("com.google.android.apps.maps")
+    view?.startActivity(intent)
   }
 }

@@ -85,6 +85,9 @@ class PlacemarkView : BaseView(), AnkoLogger {
       R.id.item_share -> {
         presenter.doShare()
       }
+      R.id.item_route -> {
+        presenter.doRoute()
+      }
     }
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     return super.onOptionsItemSelected(item)

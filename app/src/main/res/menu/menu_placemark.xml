@@ -3,20 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
+      android:id="@+id/item_delete"
+      android:icon="@android:drawable/ic_menu_delete"
+      android:title="@string/menu_deletePlacemark"
+      app:showAsAction="ifRoom" />
+  <item
+      android:id="@+id/item_save"
+      android:icon="@android:drawable/ic_menu_save"
+      android:title="@string/menu_savePlacemark"
+      app:showAsAction="ifRoom" />
+  <item
       android:id="@+id/item_share"
       android:icon="@android:drawable/ic_menu_share"
       android:title="@string/menu_sharePlacemark"
       app:showAsAction="ifRoom" />
-  <item
-      android:id="@+id/item_delete"
-      android:title="@string/menu_deletePlacemark"
-      android:icon="@android:drawable/ic_menu_delete"
-      app:showAsAction="ifRoom"/>
 
   <item
-    android:id="@+id/item_save"
-    android:title="@string/menu_savePlacemark"
-      android:icon="@android:drawable/ic_menu_save"
-    app:showAsAction="ifRoom"/>
+      android:id="@+id/item_route"
+      android:title="@string/menu_routePlacemark"
+      android:icon="@android:drawable/ic_menu_directions"
+      app:showAsAction="ifRoom"/>
 
 </menu>

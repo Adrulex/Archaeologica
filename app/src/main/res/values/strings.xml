@@ -44,5 +44,6 @@
     <string name="nothing" />
     <string name="additional_notes">Additional Notes …</string>
     <string name="menu_sharePlacemark">Share</string>
+    <string name="menu_routePlacemark">Route</string>
 
 </resources>
