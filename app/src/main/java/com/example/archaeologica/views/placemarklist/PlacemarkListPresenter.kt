@@ -45,10 +45,10 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
   fun searchPlacemarks(search : String) {
     doAsync {
       val placemarks = app.placemarks.findAll()
-      placemarks.filter{p -> p.title.contains(search)}
+      val temp = placemarks.filter{p -> p.title.contains(search)}
       uiThread {
-        view?.toast("Found " + placemarks.size + " Sites with Title '" + search + "'!")
-        view?.showPlacemarks(placemarks)
+        view?.toast("Found " + temp.size + " Sites with Title '" + search + "'!")
+        view?.showPlacemarks(temp)
       }
     }
   }
