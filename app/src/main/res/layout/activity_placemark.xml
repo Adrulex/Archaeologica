@@ -60,11 +60,13 @@
           android:layout_height="25dp"
           android:layout_marginTop="72dp"
           android:layout_marginEnd="8dp"
-          android:text="@string/Visited"
-          android:textAlignment="textEnd"
+          android:text="@string/vis"
+          android:textAlignment="textStart"
+          android:textSize="10sp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toEndOf="@+id/placemarkTitle"
-          app:layout_constraintTop_toTopOf="parent" />
+          app:layout_constraintTop_toTopOf="parent"
+          tools:ignore="SmallSp" />
 
       <CheckBox
           android:id="@+id/checkfav"
@@ -72,10 +74,12 @@
           android:layout_height="25dp"
           android:layout_marginEnd="8dp"
           android:text="@string/fav"
-          android:textAlignment="textEnd"
+          android:textAlignment="textStart"
+          android:textSize="10sp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toEndOf="@+id/placemarkTitle"
-          app:layout_constraintTop_toBottomOf="@+id/checkvisited" />
+          app:layout_constraintTop_toBottomOf="@+id/checkvisited"
+          tools:ignore="SmallSp" />
 
       <EditText
           android:id="@+id/description"
@@ -141,22 +145,21 @@
 
       <androidx.cardview.widget.CardView
           android:id="@+id/imagecard"
-          android:layout_width="match_parent"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_margin="16dp"
           android:layout_marginStart="8dp"
-          android:layout_marginEnd="8dp"
           android:layout_marginBottom="16dp"
           app:cardCornerRadius="6dp"
           app:layout_constraintBottom_toTopOf="@+id/mapView"
-          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/notes"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/description">
 
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/imageSlider"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="200dp"
             app:sliderAnimationDuration="400"
             app:sliderCircularHandlerEnabled="true"
             app:sliderIndicatorAnimationDuration="400"
@@ -167,7 +170,9 @@
             app:sliderIndicatorRadius="1dp"
             app:sliderIndicatorSelectedColor="@color/colorAccent"
             app:sliderIndicatorUnselectedColor="@android:color/darker_gray"
-            app:sliderScrollTimeInSec="1" />
+            app:sliderScrollTimeInSec="1">
+
+        </com.smarteist.autoimageslider.SliderView>
       </androidx.cardview.widget.CardView>
 
       <Button
@@ -185,12 +190,34 @@
           android:id="@+id/mapView"
           android:layout_width="match_parent"
           android:layout_height="0dp"
-          android:layout_marginTop="16dp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="1.0"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/imagecard" />
+
+      <EditText
+          android:id="@+id/notes"
+          android:layout_width="150dp"
+          android:layout_height="0dp"
+          android:layout_marginTop="16dp"
+          android:layout_marginEnd="8dp"
+          android:layout_marginBottom="16dp"
+          android:background="@null"
+          android:clickable="true"
+          android:contextClickable="true"
+          android:duplicateParentState="false"
+          android:focusable="true"
+          android:gravity="center"
+          android:hint="@string/additional_notes"
+          android:importantForAutofill="no"
+          android:textAlignment="center"
+          android:textSize="16sp"
+          app:layout_constraintBottom_toTopOf="@+id/mapView"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/imagecard"
+          app:layout_constraintTop_toBottomOf="@+id/description"
+          tools:ignore="TextFields" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

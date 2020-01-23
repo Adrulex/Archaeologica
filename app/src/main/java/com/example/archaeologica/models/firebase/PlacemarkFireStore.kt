@@ -10,7 +10,6 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import org.jetbrains.anko.AnkoLogger
-import com.example.archaeologica.helpers.readImageFromPath
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -46,6 +45,7 @@ class PlacemarkFireStore(val context: Context) : PlacemarkStore, AnkoLogger {
     if (foundPlacemark != null) {
       foundPlacemark.title = placemark.title
       foundPlacemark.description = placemark.description
+      foundPlacemark.notes = placemark.notes
       foundPlacemark.images = placemark.images
       foundPlacemark.datevisited = placemark.datevisited
       foundPlacemark.visited = placemark.visited

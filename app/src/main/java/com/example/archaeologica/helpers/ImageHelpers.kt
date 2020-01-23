@@ -1,11 +1,9 @@
 package com.example.archaeologica.helpers
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
+import android.provider.MediaStore
+
 import com.example.archaeologica.R
 
 
@@ -16,19 +14,4 @@ fun showImagePicker(parent: Activity, id: Int) {
   intent.addCategory(Intent.CATEGORY_OPENABLE)
   val chooser = Intent.createChooser(intent, R.string.select_placemark_image.toString())
   parent.startActivityForResult(chooser, id)
-}
-
-fun readImageFromPath(context: Context, path: String): Bitmap? {
-  var bitmap: Bitmap? = null
-  val uri = Uri.parse(path)
-  if (uri != null) {
-    try {
-      val parcelFileDescriptor = context.contentResolver.openFileDescriptor(uri, "r")
-      val fileDescriptor = parcelFileDescriptor?.fileDescriptor
-      bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-      parcelFileDescriptor?.close()
-    } catch (e: Exception) {
-    }
-  }
-  return bitmap
 }

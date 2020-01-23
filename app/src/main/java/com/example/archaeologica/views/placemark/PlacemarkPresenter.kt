@@ -19,6 +19,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.lang.Math.round
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -108,6 +110,10 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     placemark.fav = !placemark.fav
   }
 
+  fun doUpdateNotes(notes : String){
+    placemark.notes = notes
+  }
+
   fun doAddOrSave(title: String, description: String) {
     placemark.title = title
     placemark.description = description
@@ -175,5 +181,18 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
         locationUpdate(location)
       }
     }
+  }
+
+  fun doShare() {
+    val lat = placemark.location.lat
+    val lng = placemark.location.lng
+    val share = Intent.createChooser(Intent().apply {
+      action = Intent.ACTION_SEND
+      putExtra(Intent.EXTRA_TEXT,
+        "Hi!\r\nLook at the Site: "+ placemark.title+"\r\nI found it with my Archaeologica-App!\r\n\nhttps://www.google.com/maps/search/?api=1&query="+lat+","+lng
+      )
+      type="text/plain"
+    }, "Share this Site through:")
+    view?.startActivity(share)
   }
 }

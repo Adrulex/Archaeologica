@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.core.widget.addTextChangedListener
 import com.example.archaeologica.R
 import com.example.archaeologica.models.Location
 import com.example.archaeologica.models.PlacemarkModel
@@ -36,11 +37,13 @@ class PlacemarkView : BaseView(), AnkoLogger {
 
     checkvisited.setOnClickListener {presenter.doUpdateVisited() }
     checkfav.setOnClickListener {presenter.doUpdateFav() }
+    notes.addTextChangedListener { presenter.doUpdateNotes(notes.text.toString()) }
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {
     placemarkTitle.setText(placemark.title)
     description.setText(placemark.description)
+    notes.setText(placemark.notes)
     checkvisited.isChecked = placemark.visited
     checkfav.isChecked = placemark.fav
     this.showLocation(placemark.location)
@@ -78,6 +81,9 @@ class PlacemarkView : BaseView(), AnkoLogger {
         } else {
           presenter.doAddOrSave(placemarkTitle.text.toString(), description.text.toString())
         }
+      }
+      R.id.item_share -> {
+        presenter.doShare()
       }
     }
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")

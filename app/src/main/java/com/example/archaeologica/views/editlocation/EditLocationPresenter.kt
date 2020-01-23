@@ -21,7 +21,7 @@ class EditLocationPresenter(view: BaseView) : BasePresenter(view) {
   fun doConfigureMap(map: GoogleMap) {
     val loc = LatLng(location.lat, location.lng)
     val options = MarkerOptions()
-      .title("Placemark")
+      .title("Site Location")
       .snippet("GPS : $loc")
       .draggable(true)
       .position(loc)

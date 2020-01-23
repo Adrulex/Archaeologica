@@ -39,7 +39,10 @@
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="menu_settingsPlacemark">Settings</string>
-    <string name="fav">favs</string>
+    <string name="fav">Favourite?</string>
+    <string name="vis">visited?</string>
     <string name="nothing" />
+    <string name="additional_notes">Additional Notes …</string>
+    <string name="menu_sharePlacemark">Share</string>
 
 </resources>
