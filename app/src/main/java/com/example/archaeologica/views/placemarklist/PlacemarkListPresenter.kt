@@ -43,6 +43,17 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
     }
   }
 
+  fun doFavourites(){
+    doAsync {
+      val placemarks = app.placemarks.findAll()
+      val temp = placemarks.filter{p -> p.fav}
+      uiThread {
+        view?.toast("Found " + temp.size + " Sites in Favourites!")
+        view?.showPlacemarks(temp)
+      }
+    }
+  }
+
   fun searchPlacemarks(search : String) {
     doAsync {
       val placemarks = app.placemarks.findAll()

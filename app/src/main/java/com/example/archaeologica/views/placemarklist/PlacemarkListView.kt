@@ -75,6 +75,11 @@ class PlacemarkListView :  BaseView(), PlacemarkListener, SearchView.OnQueryText
       R.id.item_add -> presenter.doAddPlacemark()
       R.id.item_settings -> presenter.doSettings()
       R.id.item_map -> presenter.doMap()
+      R.id.item_favs -> {
+        resetSearch.isVisible = true
+        resetSearch.isClickable = true
+        presenter.doFavourites()
+      }
     }
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     return super.onOptionsItemSelected(item)

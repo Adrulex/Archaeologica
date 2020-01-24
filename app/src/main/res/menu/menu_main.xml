@@ -13,10 +13,11 @@
       android:icon="@android:drawable/ic_menu_add"
       android:title="@string/menu_addPlacemark"
       app:showAsAction="ifRoom" />
+
   <item
-      android:id="@+id/item_settings"
-      android:icon="@android:drawable/ic_menu_manage"
-      android:title="@string/menu_settingsPlacemark"
+      android:id="@+id/item_favs"
+      android:icon="@android:drawable/ic_menu_mapmode"
+      android:title="@string/menu_favsPlacemarks"
       app:showAsAction="never" />
 
   <item
@@ -24,4 +25,11 @@
       android:icon="@android:drawable/ic_menu_mapmode"
       android:title="@string/menu_MapPlacemarks"
       app:showAsAction="never" />
+
+  <item
+      android:id="@+id/item_settings"
+      android:icon="@android:drawable/ic_menu_manage"
+      android:title="@string/menu_settingsPlacemark"
+      app:showAsAction="never" />
+
 </menu>

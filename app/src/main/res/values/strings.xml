@@ -46,5 +46,6 @@
     <string name="menu_sharePlacemark">Share</string>
     <string name="menu_routePlacemark">Route</string>
     <string name="signature">© by Adrian Schön</string>
+    <string name="menu_favsPlacemarks">Favourites</string>
 
 </resources>
