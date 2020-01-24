@@ -14,54 +14,78 @@
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/latlng"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/imageIcon"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false" />
 
     <ImageView
         android:id="@+id/imageIcon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="16dp"
         android:contentDescription="@string/placemark_image_placeholder" />
+
 
     <TextView
         android:id="@+id/placemarkTitle"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/checkBox"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="60dp"
-        android:layout_toEndOf="@id/imageIcon"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toEndOf="@+id/imageIcon"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/description"
-        android:layout_width="200dp"
+        android:id="@+id/latlng"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/placemarkTitle"
-        android:layout_alignEnd="@id/datevisited"
-        android:layout_marginEnd="76dp"
-        android:layout_toEndOf="@+id/imageIcon" />
-
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toEndOf="@+id/imageIcon"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/datevisited"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/checkBox"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/latlng"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/checkFav"
+        android:layout_toEndOf="@+id/checkBox"
         android:clickable="false"
         android:text="@string/notVisited"
-        android:textSize="14sp" />
+        android:textAlignment="textStart"
+        android:textSize="22sp" />
+
+    <ToggleButton
+        android:id="@+id/checkFav"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/latlng"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/check"
+        android:text=""
+        android:textOff=""
+        android:textOn=""
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
   </RelativeLayout>
 </androidx.cardview.widget.CardView>

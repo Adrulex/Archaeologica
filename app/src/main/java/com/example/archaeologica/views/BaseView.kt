@@ -1,17 +1,18 @@
 package com.example.archaeologica.views
 
 import android.content.Intent
-
 import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import org.jetbrains.anko.AnkoLogger
+import com.example.archaeologica.models.Location
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.editlocation.EditLocationView
 import com.example.archaeologica.views.login.LoginView
+import com.example.archaeologica.views.map.PlacemarkMapView
 import com.example.archaeologica.views.placemark.PlacemarkView
 import com.example.archaeologica.views.placemarklist.PlacemarkListView
 import com.example.archaeologica.views.settings.SettingsView
+import org.jetbrains.anko.AnkoLogger
 
 const val IMAGE1_REQUEST = 0
 const val IMAGE2_REQUEST = 1
@@ -20,7 +21,7 @@ const val IMAGE4_REQUEST = 3
 const val LOCATION_REQUEST = 4
 
 enum class VIEW {
-  LOCATION, PLACEMARK, LIST, LOGIN, SETTINGS
+  LOCATION, PLACEMARK, LIST, SETTINGS, LOGIN, MAP
 }
 
 abstract class BaseView : AppCompatActivity(), AnkoLogger {
@@ -30,11 +31,12 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
   fun navigateTo(view: VIEW, code: Int = 0, key: String = "", value: Parcelable? = null) {
     var intent = Intent(this, PlacemarkListView::class.java)
     when (view) {
+      VIEW.LOGIN -> intent = Intent(this, LoginView::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
       VIEW.SETTINGS -> intent = Intent(this, SettingsView::class.java)
       VIEW.LOCATION -> intent = Intent(this, EditLocationView::class.java)
       VIEW.PLACEMARK -> intent = Intent(this, PlacemarkView::class.java)
       VIEW.LIST -> intent = Intent(this, PlacemarkListView::class.java)
-      VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
+      VIEW.MAP -> intent = Intent(this, PlacemarkMapView::class.java)
     }
     if (key != "") {
       intent.putExtra(key, value)
@@ -72,9 +74,7 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
 
   open fun showPlacemark(placemark: PlacemarkModel) {}
   open fun showPlacemarks(placemarks: List<PlacemarkModel>) {}
-  open fun showLocation(latitude : Double, longitude : Double) {}
-  open fun onReaction(Reaction : String) {}
-  open fun onError(Reaction : String) {}
+  open fun showLocation(location: Location) {}
   open fun onSave() {}
   open fun showProgress() {}
   open fun hideProgress() {}

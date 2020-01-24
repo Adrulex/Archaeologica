@@ -2,30 +2,37 @@ package com.example.archaeologica.views.placemark
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.text.InputType
+import android.view.Menu
+import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.RatingBar
+import androidx.core.widget.addTextChangedListener
 import com.example.archaeologica.R
+import com.example.archaeologica.models.Location
 import com.example.archaeologica.models.PlacemarkModel
-import com.example.archaeologica.views.*
+import com.example.archaeologica.views.BaseView
 import com.smarteist.autoimageslider.IndicatorAnimations
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import kotlinx.android.synthetic.main.activity_placemark.*
-import kotlinx.android.synthetic.main.image_slider_layout_item.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 
 
-class PlacemarkView : BaseView(), AnkoLogger {
+class PlacemarkView : BaseView(), AnkoLogger, RatingBar.OnRatingBarChangeListener, ImageListener {
 
   lateinit var presenter: PlacemarkPresenter
+  lateinit var sliderView: SliderView
   var placemark = PlacemarkModel()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark)
     super.init(toolbarPlacemark, true)
+    sliderView = findViewById(R.id.imageSlider)
 
     presenter = initPresenter (PlacemarkPresenter(this)) as PlacemarkPresenter
 
@@ -36,34 +43,48 @@ class PlacemarkView : BaseView(), AnkoLogger {
     }
 
     checkvisited.setOnClickListener {presenter.doUpdateVisited() }
+    checkfav.setOnClickListener { presenter.doUpdateFav() }
+    notes.addTextChangedListener { presenter.doUpdateNotes(notes.text.toString()) }
+    notes.setMultiLineCapSentencesAndDoneAction()
+    ratingBar.onRatingBarChangeListener = this
+  }
+
+  fun EditText.setMultiLineCapSentencesAndDoneAction() {
+    imeOptions = EditorInfo.IME_ACTION_DONE
+    setRawInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or InputType.TYPE_TEXT_FLAG_MULTI_LINE)
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {
     placemarkTitle.setText(placemark.title)
     description.setText(placemark.description)
+    notes.setText(placemark.notes)
     checkvisited.isChecked = placemark.visited
-    this.showLocation(placemark.lat, placemark.lng)
+    checkfav.isChecked = placemark.fav
+    ratingBar.rating = placemark.rating
+    this.showLocation(placemark.location)
 
-    val sliderView: SliderView = findViewById(R.id.imageSlider)
-    val adapter = PlacemarkSliderAdapter(this,placemark)
+    val adapter = PlacemarkSliderAdapter(placemark,this)
     sliderView.sliderAdapter = adapter
     sliderView.setIndicatorAnimation(IndicatorAnimations.DROP)
     sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
-    sliderView.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_RIGHT
-    sliderView.scrollTimeInSec = 2
+    sliderView.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH
+    sliderView.scrollTimeInSec = 4
     sliderView.startAutoCycle()
-    button.setOnClickListener { presenter.doSelectImage(sliderView.currentPagePosition, placemarkTitle.text.toString(),description.text.toString()) }
   }
 
   @SuppressLint("SetTextI18n")
-  override fun showLocation(latitude : Double, longitude : Double) {
-    lat.text = "Lat: %.3f".format(latitude)
-    lng.text = "Lng: %.3f".format(longitude)
+  override fun showLocation(location: Location) {
+    lat.text = "Lat: %.3f".format(location.lat)
+    lng.text = "Lng: %.3f".format(location.lng)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     menuInflater.inflate(R.menu.menu_placemark, menu)
     return super.onCreateOptionsMenu(menu)
+  }
+
+  override fun onImageClick() {
+    presenter.doSelectImage(sliderView.currentPagePosition, placemarkTitle.text.toString(),description.text.toString())
   }
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -78,6 +99,12 @@ class PlacemarkView : BaseView(), AnkoLogger {
           presenter.doAddOrSave(placemarkTitle.text.toString(), description.text.toString())
         }
       }
+      R.id.item_share -> {
+        presenter.doShare()
+      }
+      R.id.item_route -> {
+        presenter.doRoute()
+      }
     }
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     return super.onOptionsItemSelected(item)
@@ -89,6 +116,11 @@ class PlacemarkView : BaseView(), AnkoLogger {
       presenter.doActivityResult(requestCode, resultCode, data)
     }
   }
+
+  override fun onRatingChanged(bar: RatingBar?, rat: Float, user: Boolean) {
+    presenter.doUpdateRating(rat)
+  }
+
 
   override fun onBackPressed() {
     presenter.doCancel()
@@ -112,7 +144,6 @@ class PlacemarkView : BaseView(), AnkoLogger {
   override fun onResume() {
     super.onResume()
     mapView.onResume()
-    presenter.doResartLocationUpdates()
   }
 
   override fun onSaveInstanceState(outState: Bundle) {

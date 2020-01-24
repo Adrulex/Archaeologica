@@ -1,17 +1,18 @@
 package com.example.archaeologica.views.placemark
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
+import android.provider.MediaStore
+import androidx.core.net.toUri
+import com.example.archaeologica.R
 import com.example.archaeologica.helpers.checkLocationPermissions
-import com.example.archaeologica.helpers.createDefaultLocationRequest
 import com.example.archaeologica.helpers.isPermissionGranted
-import com.example.archaeologica.helpers.showImagePicker
 import com.example.archaeologica.models.Location
 import com.example.archaeologica.models.PlacemarkModel
 import com.example.archaeologica.views.*
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -27,10 +28,9 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
 
   var map: GoogleMap? = null
   var placemark = PlacemarkModel()
-  var defaultLocation = Location(52.245696, -7.139102, 15f)
+  var defaultLocation = Location(49.0208841,12.0693126,13f)
   var edit = false
   var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
-  val locationRequest = createDefaultLocationRequest()
 
   init {
     if (view.intent.hasExtra("placemark_edit")) {
@@ -48,22 +48,7 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
   @SuppressLint("MissingPermission")
   fun doSetCurrentLocation() {
     locationService.lastLocation.addOnSuccessListener {
-      locationUpdate(it.latitude, it.longitude)
-    }
-  }
-
-  @SuppressLint("MissingPermission")
-  fun doResartLocationUpdates() {
-    val locationCallback = object : LocationCallback() {
-      override fun onLocationResult(locationResult: LocationResult?) {
-        if (locationResult != null && locationResult.locations != null) {
-          val l = locationResult.locations.last()
-          locationUpdate(l.latitude, l.longitude)
-        }
-      }
-    }
-    if (!edit) {
-      locationService.requestLocationUpdates(locationRequest, locationCallback, null)
+      locationUpdate(Location(it.latitude, it.longitude))
     }
   }
 
@@ -71,26 +56,24 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     if (isPermissionGranted(requestCode, grantResults)) {
       doSetCurrentLocation()
     } else {
-      locationUpdate(defaultLocation.lat, defaultLocation.lng)
+      locationUpdate(defaultLocation)
     }
   }
 
   fun doConfigureMap(m: GoogleMap) {
     map = m
-    locationUpdate(placemark.lat, placemark.lng)
+    locationUpdate(placemark.location)
   }
 
-  fun locationUpdate(lat: Double, lng: Double) {
-    placemark.lat = lat
-    placemark.lng = lng
-    placemark.zoom = 15f
+  fun locationUpdate(location : Location) {
+    placemark.location = location
+    placemark.location.zoom = 15f
     map?.clear()
     map?.uiSettings?.isZoomControlsEnabled = false
-    val options =
-      MarkerOptions().title(placemark.title).position(LatLng(placemark.lat, placemark.lng))
+    val options = MarkerOptions().title(placemark.title).position(LatLng(placemark.location.lat, placemark.location.lng))
     map?.addMarker(options)
-    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(placemark.lat, placemark.lng), placemark.zoom))
-    view?.showLocation(placemark.lat, placemark.lng)
+    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(placemark.location.lat, placemark.location.lng), placemark.location.zoom))
+    view?.showLocation(placemark.location)
   }
 
   fun doUpdateVisited(){
@@ -106,6 +89,18 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     placemark.datevisited = currentDate
   }
 
+  fun doUpdateFav(){
+    placemark.fav = !placemark.fav
+  }
+
+  fun doUpdateRating(rating : Float){
+    placemark.rating = rating
+  }
+
+  fun doUpdateNotes(notes : String){
+    placemark.notes = notes
+  }
+
   fun doAddOrSave(title: String, description: String) {
     placemark.title = title
     placemark.description = description
@@ -113,30 +108,27 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
       if (edit) {
         app.placemarks.update(placemark)
       } else {
-        app.placemarks.create(placemark, app.activeUser)
+        app.placemarks.create(placemark)
       }
       uiThread {
-        app.activePlacemark = 0
         view?.finish()
       }
     }
   }
 
   fun doCancel() {
-    app.activePlacemark = 0
     view?.finish()
   }
 
   fun doDelete() {
-    doAsync {
-      app.placemarks.delete(placemark)
-
-      uiThread {
-        app.activePlacemark = 0
-        view?.finish()
-      }
-    }
+    app.placemarks.delete(placemark)
+    view?.finish()
   }
+
+  fun doSetLocation() {
+    view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location",Location(placemark.location.lat, placemark.location.lng, placemark.location.zoom))
+  }
+
 
   fun doSelectImage(Select : Int, Title : String, Description : String) {
     placemark.title = Title
@@ -151,11 +143,26 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
     }
   }
 
-  fun doSetLocation() {
-    view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location",Location(placemark.lat, placemark.lng, placemark.zoom))
+  fun showImagePicker(parent: Activity, id: Int) {
+
+    val pickIntent = Intent()
+    pickIntent.type = "image/*"
+    pickIntent.action = Intent.ACTION_OPEN_DOCUMENT
+    pickIntent.addCategory(Intent.CATEGORY_OPENABLE)
+
+    val fileUri : Uri = "".toUri()
+    val camIntent = Intent()
+    camIntent.type = "image/*"
+    camIntent.action = MediaStore.ACTION_IMAGE_CAPTURE
+    camIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
+
+    val chooser = Intent.createChooser(pickIntent, R.string.select_placemark_image.toString())
+    chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(camIntent))
+    parent.startActivityForResult(chooser, id)
   }
 
   override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+
     when (requestCode) {
       IMAGE1_REQUEST -> {
         placemark.images[0] = data.data.toString()
@@ -175,11 +182,50 @@ class PlacemarkPresenter(view: BaseView) : BasePresenter(view) {
       }
       LOCATION_REQUEST -> {
         val location = data.extras?.getParcelable<Location>("location")!!
-        placemark.lat = location.lat
-        placemark.lng = location.lng
-        placemark.zoom = location.zoom
-        locationUpdate(placemark.lat, placemark.lng)
+        placemark.location.lat = location.lat
+        placemark.location.lng = location.lng
+        placemark.location.zoom = location.zoom
+        locationUpdate(location)
       }
     }
+  }
+
+  fun doShare() {
+    val lat = placemark.location.lat
+    val lng = placemark.location.lng
+    val share = Intent.createChooser(Intent().apply {
+      action = Intent.ACTION_SEND
+      putExtra(Intent.EXTRA_TEXT,
+        "Hi!\r\nLook at the Site: "+ placemark.title+"\r\nI found it with my Archaeologica-App!\r\n\nhttps://www.google.com/maps/search/?api=1&query="+lat+","+lng
+      )
+      type="text/plain"
+    }, "Share this Site through:")
+    view?.startActivity(share)
+  }
+
+  fun doRoute(){
+
+    var lat = 0.0
+    var lng = 0.0
+
+    locationService.lastLocation.addOnSuccessListener {
+      lat = it.latitude
+      lng = it.longitude
+    }
+
+    val uri = java.lang.String.format(
+      Locale.ENGLISH,
+      "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)",
+      lat,
+      lng,
+      "Current Location",
+      placemark.location.lat,
+      placemark.location.lng,
+      placemark.title
+    )
+
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+    intent.setPackage("com.google.android.apps.maps")
+    view?.startActivity(intent)
   }
 }

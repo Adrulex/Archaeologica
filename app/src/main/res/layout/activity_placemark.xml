@@ -53,18 +53,52 @@
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp">
 
+      <RatingBar
+          android:id="@+id/ratingBar"
+          style="?android:attr/ratingBarStyleSmall"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:layout_marginBottom="8dp"
+          android:clickable="true"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:isIndicator="false"
+          android:numStars="5"
+          android:scaleX="1.8"
+          android:scaleY="1.8"
+          android:stepSize="1.0"
+          app:layout_constraintBottom_toTopOf="@+id/notes"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/imagecard"
+          app:layout_constraintTop_toBottomOf="@+id/description" />
 
       <CheckBox
           android:id="@+id/checkvisited"
           android:layout_width="80dp"
-          android:layout_height="50dp"
+          android:layout_height="25dp"
           android:layout_marginTop="72dp"
           android:layout_marginEnd="8dp"
-          android:text="@string/Visited"
-          android:textAlignment="center"
+          android:text="@string/vis"
+          android:textAlignment="textStart"
+          android:textSize="10sp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toEndOf="@+id/placemarkTitle"
-          app:layout_constraintTop_toTopOf="parent" />
+          app:layout_constraintTop_toTopOf="parent"
+          tools:ignore="SmallSp" />
+
+      <CheckBox
+          android:id="@+id/checkfav"
+          android:layout_width="80dp"
+          android:layout_height="25dp"
+          android:layout_marginEnd="8dp"
+          android:text="@string/fav"
+          android:textAlignment="textStart"
+          android:textSize="10sp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/placemarkTitle"
+          app:layout_constraintTop_toBottomOf="@+id/checkvisited"
+          tools:ignore="SmallSp" />
 
       <EditText
           android:id="@+id/description"
@@ -130,22 +164,25 @@
 
       <androidx.cardview.widget.CardView
           android:id="@+id/imagecard"
-          android:layout_width="match_parent"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_margin="16dp"
           android:layout_marginStart="8dp"
-          android:layout_marginEnd="8dp"
           android:layout_marginBottom="16dp"
           app:cardCornerRadius="6dp"
           app:layout_constraintBottom_toTopOf="@+id/mapView"
-          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/notes"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/description">
 
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/imageSlider"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="200dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:translationZ="30dp"
             app:sliderAnimationDuration="400"
             app:sliderCircularHandlerEnabled="true"
             app:sliderIndicatorAnimationDuration="400"
@@ -156,33 +193,45 @@
             app:sliderIndicatorRadius="1dp"
             app:sliderIndicatorSelectedColor="@color/colorAccent"
             app:sliderIndicatorUnselectedColor="@android:color/darker_gray"
-            app:sliderScrollTimeInSec="1" />
-      </androidx.cardview.widget.CardView>
+            app:sliderScrollTimeInSec="1">
 
-      <Button
-          android:id="@+id/button"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:alpha="0"
-          app:layout_constraintBottom_toBottomOf="@id/imagecard"
-          app:layout_constraintEnd_toEndOf="@id/imagecard"
-          app:layout_constraintStart_toStartOf="@id/imagecard"
-          app:layout_constraintTop_toTopOf="@id/imagecard"
-          tools:visibility="visible" />
+        </com.smarteist.autoimageslider.SliderView>
+      </androidx.cardview.widget.CardView>
 
       <com.google.android.gms.maps.MapView
           android:id="@+id/mapView"
           android:layout_width="match_parent"
           android:layout_height="0dp"
-          android:layout_marginTop="16dp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintHorizontal_bias="1.0"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/imagecard" />
 
+      <EditText
+          android:id="@+id/notes"
+          android:layout_width="150dp"
+          android:layout_height="0dp"
+          android:layout_marginTop="8dp"
+          android:layout_marginEnd="8dp"
+          android:layout_marginBottom="16dp"
+          android:background="@null"
+          android:clickable="true"
+          android:contextClickable="true"
+          android:duplicateParentState="false"
+          android:focusable="true"
+          android:gravity="center"
+          android:hint="@string/additional_notes"
+          android:importantForAutofill="no"
+          android:textAlignment="center"
+          android:textSize="16sp"
+          app:layout_constraintBottom_toTopOf="@+id/mapView"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/imagecard"
+          app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+          tools:ignore="TextFields" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
   </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

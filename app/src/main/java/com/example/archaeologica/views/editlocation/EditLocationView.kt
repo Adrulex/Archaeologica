@@ -18,7 +18,7 @@ class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.O
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_edit_location)
-    super.init(toolbar, true)
+    super.init(edittoolbar, true)
 
     presenter = initPresenter(EditLocationPresenter(this)) as EditLocationPresenter
 
