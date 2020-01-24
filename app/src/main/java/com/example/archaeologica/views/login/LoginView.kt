@@ -1,12 +1,15 @@
 package com.example.archaeologica.views.login
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.toast
+import android.view.inputmethod.InputMethodManager
 import com.example.archaeologica.R
 import com.example.archaeologica.views.BaseView
+import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.toast
+
 
 class LoginView : BaseView() {
 
@@ -22,6 +25,12 @@ class LoginView : BaseView() {
     presenter = initPresenter(LoginPresenter(this)) as LoginPresenter
 
     signUp.setOnClickListener {
+      val view = this.currentFocus
+      if (view != null) {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+      }
+
       val email = email.text.toString()
       val password = password.text.toString()
       if (email == "" || password == "") {
@@ -33,6 +42,12 @@ class LoginView : BaseView() {
     }
 
     logIn.setOnClickListener {
+      val view = this.currentFocus
+      if (view != null) {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+      }
+
       val email = email.text.toString()
       val password = password.text.toString()
       if (email == "" || password == "") {

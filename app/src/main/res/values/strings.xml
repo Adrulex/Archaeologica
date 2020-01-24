@@ -5,7 +5,7 @@
     <string name="button_addPlacemark">Add Site</string>
     <string name="menu_addPlacemark">Add</string>
     <string name="menu_cancelPlacemark">Cancel</string>
-    <string name="enter_placemark_title"> Please enter a title!</string>
+    <string name="enter_placemark_title">Please enter a Title!</string>
     <string name="save_placemark">Save Site</string>
     <string name="button_addImage">Add Image</string>
     <string name="select_placemark_image">Select Image</string>
@@ -41,9 +41,10 @@
     <string name="menu_settingsPlacemark">Settings</string>
     <string name="fav">Favourite?</string>
     <string name="vis">visited?</string>
-    <string name="nothing" />
+    <string name="nothing"/>
     <string name="additional_notes">Additional Notes …</string>
     <string name="menu_sharePlacemark">Share</string>
     <string name="menu_routePlacemark">Route</string>
+    <string name="signature">© by Adrian Schön</string>
 
 </resources>

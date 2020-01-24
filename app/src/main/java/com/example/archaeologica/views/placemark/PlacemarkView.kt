@@ -3,8 +3,11 @@ package com.example.archaeologica.views.placemark
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.RatingBar
 import androidx.core.widget.addTextChangedListener
 import com.example.archaeologica.R
@@ -42,7 +45,13 @@ class PlacemarkView : BaseView(), AnkoLogger, RatingBar.OnRatingBarChangeListene
     checkvisited.setOnClickListener {presenter.doUpdateVisited() }
     checkfav.setOnClickListener { presenter.doUpdateFav() }
     notes.addTextChangedListener { presenter.doUpdateNotes(notes.text.toString()) }
+    notes.setMultiLineCapSentencesAndDoneAction()
     ratingBar.onRatingBarChangeListener = this
+  }
+
+  fun EditText.setMultiLineCapSentencesAndDoneAction() {
+    imeOptions = EditorInfo.IME_ACTION_DONE
+    setRawInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES or InputType.TYPE_TEXT_FLAG_MULTI_LINE)
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {

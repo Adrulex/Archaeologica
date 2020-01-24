@@ -13,12 +13,19 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        archivesBaseName = "$applicationId-v$versionCode($versionName)"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            versionNameSuffix "-T"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            versionNameSuffix "-R"
         }
     }
 }

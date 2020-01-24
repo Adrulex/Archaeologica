@@ -1,11 +1,13 @@
 package com.example.archaeologica.views.placemarklist
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,9 +38,15 @@ class PlacemarkListView :  BaseView(), PlacemarkListener, SearchView.OnQueryText
 
     resetSearch.setOnClickListener {
 
+      val view = this.currentFocus
+      if (view != null) {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+      }
+
       invalidateOptionsMenu()
       menuInflater.inflate(R.menu.menu_main, menu)
-      toast("Showing now all Sites!")
+      toast("Showing all Sites again!")
       resetSearch.isVisible = false
       resetSearch.isClickable = false
       presenter.loadPlacemarks()

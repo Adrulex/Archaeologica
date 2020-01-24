@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
+import java.util.*
 
 
 class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
@@ -45,9 +46,9 @@ class PlacemarkListPresenter(view: BaseView) : BasePresenter(view) {
   fun searchPlacemarks(search : String) {
     doAsync {
       val placemarks = app.placemarks.findAll()
-      val temp = placemarks.filter{p -> p.title.contains(search)}
+      val temp = placemarks.filter{p -> p.title.toLowerCase(Locale.ENGLISH).contains(search.toLowerCase(Locale.ENGLISH))}
       uiThread {
-        view?.toast("Found " + temp.size + " Sites with Title '" + search + "'!")
+        view?.toast("Found " + temp.size + " Sites containing '" + search + "' in Title!")
         view?.showPlacemarks(temp)
       }
     }
